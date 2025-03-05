@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        @(string.IsNullOrEmpty(ViewData["Title"] as string) ? "Alpha Inc." : ViewData["title"] + " - Alpha Inc.")
+    </title>
+    <script type="importmap"></script>    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebbApp_Alpha.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <header></header>
+        <main>
+            @RenderBody()
+        </main>
+        <footer></footer>
+    </div>    
+    
+  
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
