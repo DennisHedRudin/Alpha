@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebbApp-Alpha", "WebbApp-Alpha\WebbApp-Alpha.csproj", "{89DAE2A7-8C25-4F15-864F-E6FB27E24955}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{0F57C7F9-9030-421E-9899-F165F5BFB9C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F697532A-03FA-4099-85A6-4E5E55743DAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{4E32389D-3BE5-4168-ACA1-B0C67F7B652A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Factories", "Factories", "{9EE0F5F7-A879-4A96-9C70-11FD201E032A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F04A0CF0-04B3-4DA2-9722-176D867DEFAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{69DA3051-393B-450B-A069-0836BF4266F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +30,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E32389D-3BE5-4168-ACA1-B0C67F7B652A} = {F697532A-03FA-4099-85A6-4E5E55743DAF}
+		{9EE0F5F7-A879-4A96-9C70-11FD201E032A} = {F697532A-03FA-4099-85A6-4E5E55743DAF}
+		{F04A0CF0-04B3-4DA2-9722-176D867DEFAB} = {0F57C7F9-9030-421E-9899-F165F5BFB9C4}
+		{69DA3051-393B-450B-A069-0836BF4266F3} = {F697532A-03FA-4099-85A6-4E5E55743DAF}
 	EndGlobalSection
 EndGlobal
