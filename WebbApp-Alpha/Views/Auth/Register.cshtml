@@ -1,8 +1,9 @@
-﻿@{
+﻿
+@{
 	Layout = "_CleanLayout";
-	ViewData["Title"] = "Projects";
+	ViewData["Title"] = "Register";
 }
 
-<div class="center-screen">
-	<div class="form-container">Register</div>
+<div class="center-content">
+	@await Html.PartialAsync("Partials/Sections/_CreateFormPartial")
 </div>

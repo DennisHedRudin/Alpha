@@ -11,5 +11,24 @@ public class ProjectsController : Controller
         return View();
     }
 
-  
+    [Route("/AllProjects")]
+    public IActionResult AllProjects()
+    {
+        return View();
+    }
+
+    [Route("/StartedProjects")]
+    public IActionResult StartedProjects()
+    {
+        return View();
+    }
+
+    [Route("/CompletedProjects")]
+    public IActionResult CompletedProjects()
+    {
+        return View();
+    }
+
+
+
 }

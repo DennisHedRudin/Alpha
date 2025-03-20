@@ -3,8 +3,14 @@
         <i class="bi bi-briefcase-fill"></i>
         <span>Projects</span>
     </a>
+
     <a class="nav-link  @(Context.Request.Path == "/admin/members" ? "active": "")" asp-action="Members" asp-controller="Admin">
         <i class="bi bi-people-fill"></i>
         <span>Team Members</span>
+    </a>
+
+    <a class="nav-link  @(Context.Request.Path == "/admin/clients" ? "active": "")" asp-action="Clients" asp-controller="Admin">
+        <i class="bi bi-bank"></i>
+        <span>Clients</span>
     </a>
 </nav>   

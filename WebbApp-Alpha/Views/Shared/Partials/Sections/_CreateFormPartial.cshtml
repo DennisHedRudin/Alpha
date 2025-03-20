@@ -1,44 +1,72 @@
-﻿<div class="form-container">
-    <div class="form-head">
-        <h1>Create Account</h1>
-        <button class="btn btn-gray"><img src="/images/google-icon.svg" alt="">Sign upp with google</button>
-        <p>OR</p>
+﻿@model SignUpFormModel
+
+
+<div class="center-screen">
+    <div class="form-container">
+
+        <form asp-action="Register" method="post" enctype="multipart/form-data" novalidate>
+            <div class="form-head">
+                <h1>Create Account</h1>
+                <button class="btn btn-gray google"><img src="/images/google-icon.svg" alt="">Sign upp with google</button>
+                <div class="or-line"></div>
+                <p>OR</p>
+            </div>
+
+
+            <div class="mb-3 form-group">
+                <label asp-for="FullName" class="form-label">Full Name</label>
+                <div class="field-group">
+                    <input asp-for="FullName" class="form-control">
+                    <span asp-validation-for="FullName"></span>
+                </div>
+            </div>
+
+
+            <div class="mb-3 form-group">
+                <label asp-for="Email" class="form-label">Email</label>
+                <div class="field-group">
+                    <input type="email" asp-for="Email" class="form-control">
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
+
+
+
+            <div class="mb-3 form-group">
+                <label asp-for="Password" class="form-label">Password</label>
+                <div class="field-group">
+                    <input type="password" asp-for="Password" class="form-control" value="@Model?.Password">
+                    <span asp-validation-for="Password"></span>
+                </div>
+            </div>
+
+
+
+            <div class="mb-3 form-group">
+                <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                <div class="field-group">
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" value="@Model?.ConfirmPassword">
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">I accept <a href="" class="terms-link">Terms and Conditions</a></label>
+            </div>
+
+            <div class="btn-box">
+                <button type="submit" class="btn btn-blue">Create Account</button>
+            </div>
+        </form>
+
+
+
+        <div class="reg-footer">
+            <p>I already hade an Account? <a href="" class="terms-link">Login</a></p>
+
+        </div>
+
     </div>
-    <form>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Full Name">
-
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your email address">
-
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your password">
-        </div>
-
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm your password">
-        </div>
-
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">I accept <a href="" class="terms-link">Terms and Conditions</a></label>
-        </div>
-    </form>
-
-    <div class="btn-box">
-        <button type="submit" class="btn btn-blue">Create Account</button>
-    </div>
-
-    <div class="reg-footer">
-        <p>I already hade an Account? <a href="" class="terms-link">Login</a></p>
-
-    </div>
-
 </div>
+

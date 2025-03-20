@@ -1,0 +1,19 @@
+﻿@{
+	Layout = "_PortalLayout";
+	ViewData["Title"] = "Clients";
+}
+
+<partial name="Partials/Sections/_AddClientForm" />
+<partial name="Partials/Sections/_EditClientForm" />
+
+<section id="Clients">
+	
+	<header class="main-headline">
+		<h2>Cilents</h2>
+		<button type="button" class="btn btn-blue" data-modal="true" data-target="#addClientModal">Add Client</button>
+	</header>
+	
+	<div class="surface">
+		<partial name="Partials/Sections/_ClientList" />
+	</div>
+</section>
