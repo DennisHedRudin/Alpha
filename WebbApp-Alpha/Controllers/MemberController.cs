@@ -1,16 +1,14 @@
-﻿using Business.Models.Clients;
+﻿using Business.Models.Members;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace WebbApp_Alpha.Controllers;
 
-
-public class ClientsController : Controller
+public class MemberController : Controller
 {
-    //private readonly ClientService _clientService; 
+    //private readonly MemberService _memberService;
 
     [HttpPost]
-    public IActionResult AddClient(AddClientForm form)
+    public IActionResult AddMember(AddMemberForm form)
     {
         if (!ModelState.IsValid)
         {
@@ -34,14 +32,14 @@ public class ClientsController : Controller
         //    return Problem("Unable to submit data.");
         //}
 
-        return Ok(new { seccess = true });
+        return Ok(new { success = true });
 
 
     }
 
 
     [HttpPost]
-    public IActionResult EditClient(EditClientForm form)
+    public IActionResult EditMember(EditMemberForm form)
     {
         if (!ModelState.IsValid)
         {
@@ -66,6 +64,6 @@ public class ClientsController : Controller
         //}
 
         return Ok(new { seccess = true });
-        
+
     }
 }

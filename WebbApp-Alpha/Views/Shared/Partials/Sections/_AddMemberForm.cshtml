@@ -1,27 +1,26 @@
-﻿@model EditClientForm
+﻿
+@model AddMemberForm
 
-
-<div id="editClientModal" class="modal">
+<div id="addMemberModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Edit Client</h3>
+            <h3>Add Team Member</h3>
             <button class="btn-closed" data-close="true"></button>
         </div>
 
-        <form method="post" asp-action="EditClient" asp-controller="Clients" novalidate>
-            <input asp-for="Id" readonly type="hidden" />
+        <form method="post" asp-action="AddMember" asp-controller="Member" novalidate>
 
 
             <div class="image-previewer circle">
                 <img src="" class="image-preview" />
-                <input asp-for="ClientImage" accept="image/*" class="hide" />
+                <input asp-for="MemberImage" accept="image/*" class="hide" />
             </div>
 
             <div class="form-group">
-                <label asp-for="ClientName"></label>
+                <label asp-for="MemberName"></label>
                 <div class="field-group">
-                    <input asp-for="ClientName">
-                    <span asp-validation-for="ClientName"></span>
+                    <input asp-for="MemberName">
+                    <span asp-validation-for="MemberName"></span>
                 </div>
             </div>
 
@@ -54,3 +53,5 @@
         </form>
     </div>
 </div>
+
+@await Html.PartialAsync("_ValidationScripts")

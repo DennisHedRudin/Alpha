@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Models;
+namespace Business.Models.Clients;
 
 public class EditClientForm
 {
-    
+
     public int Id { get; set; }
 
     [Display(Name = "Client Image", Prompt = "Select an image")]

@@ -933,10 +933,20 @@ table {
             margin-bottom: 2rem;
         }
 
+/* Sections */
+
 #addClientModal .modal-content {
     width: 550px;
 }
 
 #editClientModal .modal-content {
+    width: 550px;
+}
+
+#addMemberModal .modal-content {
+    width: 550px;
+}
+
+#editMemberModal .modal-content {
     width: 550px;
 }

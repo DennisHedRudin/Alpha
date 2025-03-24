@@ -12,21 +12,13 @@ namespace WebbApp_Alpha.Controllers
             return View();
         }
 
-        [HttpGet]
+        
         //[Route("clients")]
         public IActionResult Clients()
         {
             return View();
         }
 
-        [HttpPost]        
-
-        public IActionResult AddClient(AddClientForm form)
-        {
-            if (!ModelState.IsValid)
-                return RedirectToAction("clients");
-
-            return View();
-        }
+      
     }
 }
