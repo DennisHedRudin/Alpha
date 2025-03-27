@@ -25,5 +25,11 @@ namespace WebbApp_Alpha.Models
         [Required(ErrorMessage = "You must confirm your password.")]
         [Compare(nameof(Password), ErrorMessage = "Your password do not match!")]
         public string ConfirmPassword { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Terms & Conditions", Prompt ="I accept the terms & conditions.")]
+        [DataType(DataType.Custom)]
+        public bool TermsAndConditions { get; set; } 
+
     }
 }

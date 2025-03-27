@@ -7,6 +7,7 @@
     --font-standard: "Nunito", sans-serif;
     --font-logo: "Comfortaa", sans-serif;
     --font-boots: "bootstrap-icons";
+    --font-fa-pro: "Font Awesome 6 Pro";
     --size-tablet: 768px;
     --size-desktop: 1400px;
     --heading-color: #1A1926;
@@ -157,13 +158,16 @@ label {
 .terms-link {
     color: var(--accent);
     text-decoration: none;
-    &:hover
+}
+    
+
+ .terms-link:hover
 
 {
     color: var(--accent-dark);
 }
 
-}
+
 
 .forgot-check {
     display: grid;
@@ -256,6 +260,7 @@ label {
 
 .main {
     grid-area: main;
+    padding: 1rem 2rem;
 }
 
 }
@@ -462,13 +467,13 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    a
+}
 
-{
+.main-headline a{
     text-decoration: none;
 }
 
-}
+
 
 .nav-status {
     margin-top: 1.5rem;
@@ -477,20 +482,31 @@ a {
     gap: 1rem;
 }
 
-r
+
 /* Buttons */
 .btn {
+    cursor: pointer;
     font-family: var(--font-standard);
+    background-color: var(--btn-blue-background);
+    color: var(--btn-blue-text);
+    border: 1px solid var(--btn-blue-border);
     border-radius: 14px;
-    font-weight: 600;
-    font-size: 1em;
-    padding: 0.7rem 1.8rem;
+    font-weight: 400;
+    font-size: 0.8em;
+    padding: 0.8rem 1rem;
     display: flex;
     gap: 0.5rem;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    text-decoration: none;
+    transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    max-width: 130px;
 }
+
+    .btn:hover {
+        color: var(--surface);
+        background-color: var(--accent-dark);
+    }
 
 
 .btn-side {
@@ -525,18 +541,7 @@ r
 }
 
 
-.btn-blue {
-    color: var(--btn-blue-text);
-    background-color: var(--btn-blue-background);
-    border-color: var(--btn-blue-border);
-    &:hover
 
-{
-    color: var(--surface);
-    background-color: var(--accent-dark);
-}
-
-}
 
 .btn-gray {
     color: var(--btn-gray-text);
@@ -582,7 +587,7 @@ r
     transform: translateX(-50%);
 }
 
-.btn-add {
+/*.btn-add {
     cursor: pointer;
     font-size: 2em;
     border: none;
@@ -591,10 +596,11 @@ r
     display: flex;
     justify-content: center;
     align-items: center;
-}
+}*/
 
-    .btn-add::after {
-        content: '\U+F4FE';
+    .btn-add::before {
+        content: '\2b';
+        font-family: var(--font-fa-pro);
     }
 
 .btn-close {

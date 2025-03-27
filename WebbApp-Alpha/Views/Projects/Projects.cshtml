@@ -1,20 +1,18 @@
-﻿@{
-	Layout = "_PortalLayout";
+﻿@{	
 	ViewData["Title"] = "Projects";
 }
 
 
-    <div class="main-start">
-        <div class="main-headline">
-            <h2>Projects</h2>
-            <a href="#" >  
-                <button class ="btn btn-blue">
-                    <i class="bi bi-plus-lg"></i>
-                    Add Project
-                </button>                             
-            </a>
-        </div>
+    
+    <div class="main-headline">
+        <h2>Projects</h2>        
+        <button class ="btn btn-add">                
+            Add Project
+        </button>                             
+        
+    </div>
 
+    <div class="main-start">
         <div class="nav-status">
             <a class="status-btn @(Context.Request.Path == "/AllProjects" ? "active": "")" asp-action="AllProjects" asp-controller="Projects">ALL [0]</a>
             <a class="status-btn @(Context.Request.Path == "/StartedProjects" ? "active": "")" asp-action="StartedProjects" asp-controller="Projects">STARTED [0]</a>

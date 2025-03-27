@@ -1,24 +1,30 @@
-﻿using Business.Models;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebbApp_Alpha.Controllers
+namespace WebbApp_Alpha.Controllers;
+
+
+[Authorize]
+public class AdminController : Controller
 {
-    //[Route("admin")]
-    public class AdminController : Controller
+
+    public IActionResult Projects()
     {
-        [Route("members")]
-        public IActionResult Members()
-        {
-            return View();
-        }
-
-        
-        //[Route("clients")]
-        public IActionResult Clients()
-        {
-            return View();
-        }
-
-      
+        return View();
     }
+
+    //[Authorize(Roles = "admin")]
+    public IActionResult Members()
+    {
+        return View();
+    }
+
+    //[Authorize(Roles = "admin")]
+    public IActionResult Clients()
+    {
+        return View();
+    }
+
+  
 }
