@@ -6,7 +6,7 @@
 
         <form asp-action="Register" method="post" enctype="multipart/form-data" novalidate>
             <div class="form-head">
-                <h1>Create Account</h1>
+                <h1>@ViewData["Title"]</h1>
                 <button class="btn btn-gray google"><img src="/images/google-icon.svg" alt="">Sign upp with google</button>
                 <div class="or-line"></div>
                 <p>OR</p>
@@ -50,9 +50,17 @@
                 </div>
             </div>
 
+            @if (!string.IsNullOrEmpty(ViewBag?.ErrorMessage))
+            {
+                <div class="alert-notification error">
+                    @ViewBag?.ErrorMessage
+                </div>
+            }
+
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <input type="checkbox" asp-for="TermsAndConditions" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">I accept <a href="" class="terms-link">Terms and Conditions</a></label>
+                <span asp-validation-for="TermsAndConditions" class="error"></span>
             </div>
 
             <div class="btn-box">
@@ -63,7 +71,7 @@
 
 
         <div class="reg-footer">
-            <p>I already hade an Account? <a href="" class="terms-link">Login</a></p>
+            <p>I already hade an Account? <a asp-controller="auth" asp-action="login" class="terms-link">Login</a></p>
 
         </div>
 

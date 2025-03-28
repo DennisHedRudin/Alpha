@@ -4,8 +4,8 @@ namespace WebbApp_Alpha.Models
 {
     public class SignUpFormModel
     {
-        [Display(Name = "Last name", Prompt = "Your full name")]
-        [Required(ErrorMessage = "You must enter your first name.")]
+        [Display(Name = "Full name", Prompt = "Your full name")]
+        [Required(ErrorMessage = "You must enter your full name.")]
         public string FullName { get; set; } = null!;
 
         [Display(Name = "Email", Prompt = "Your email")]
@@ -26,9 +26,8 @@ namespace WebbApp_Alpha.Models
         [Compare(nameof(Password), ErrorMessage = "Your password do not match!")]
         public string ConfirmPassword { get; set; } = null!;
 
-        [Required]
-        [Display(Name = "Terms & Conditions", Prompt ="I accept the terms & conditions.")]
-        [DataType(DataType.Custom)]
+        [Required(ErrorMessage = "You must accept the terms.")]
+        [Display(Name = "Terms & Conditions", Prompt = "I accept the terms & conditions.")]
         public bool TermsAndConditions { get; set; } 
 
     }
