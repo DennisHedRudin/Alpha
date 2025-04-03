@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Business.Models.Members;
+namespace WebbApp_Alpha.ViewModels.Members;
 
 public class EditMemberForm
 {

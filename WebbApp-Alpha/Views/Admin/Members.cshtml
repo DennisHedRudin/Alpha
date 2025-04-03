@@ -1,4 +1,7 @@
-﻿@{	
+﻿@using Business.Models.Members
+@model IEnumerable<Member>
+
+@{	
 	Layout = "_PortalLayout";
 	ViewData["Title"] = "Team Members";
 }
@@ -13,7 +16,22 @@
 		<button type="button" class="btn btn-add" data-modal="true" data-target="#addMemberModal">Add Member</button>
 	</header>
 
-	<div class="surface">
+	<div class="surface members-list">
+		@if (Model != null) {
+			@foreach (var member in Model)
+			{
+				<div class="card member">
+					
+						<h4 class="name">@member.FirstName @member.LastName</h4>
+						<div class="jobtitle">@member.JobTitle</div>
+						<div class="email">@member.Email</div>
+						<div class="phone">@member.Phone</div>
+						<div class="role"></div>
+						<button></button>
+					
+				</div>
+			}
+		}
 		
 	</div>
 </section>

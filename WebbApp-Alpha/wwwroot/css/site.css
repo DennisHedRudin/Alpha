@@ -53,23 +53,22 @@
     --active-link: var(--accent-10);
     --active-text: var(--accent);
     --modal-background: #3333332f;
-
     --error-background: #ff404033;
-
     --form-input-text-color: var(--heading-color);
     --form-input-placeholder-color: var(--body-light);
     --form-input-background-color: var(--surface);
     --form-input-border-color: var(--gray-400);
     --form-input-border-focus-color: var(--accent);
-
     --form-error-input-text-color: var(--heading-color);
     --form-error-input-background-color: var(--surface);
     --form-error-input-border-color: var(--opacity-red);
     --form-error-input-focus-color: var(--accent);
-
     --form-error-message-text-color: var(--dark-red);
     --form-error-message-background: var(--error-background);
     --form-error-message-border-color: var(--red);
+    --card-text-color: var(--heading-color);
+    --card-border-color: var(--surface);
+    --card-background-color: var(--surface);    
 }
 
 [data-theme="dark"] {
@@ -575,6 +574,11 @@ a {
 
 }
 
+.btn-logout::before {
+    content: '\f2f5';
+    font-family: var(--font-fa-pro);
+}
+
 .status-btn {
     position: relative;
     text-decoration: none;
@@ -1000,3 +1004,40 @@ table {
 #login .alert-notification{
     text-align: center;
 }
+
+#members {
+    display: grid;
+    gap: 2rem;
+}
+
+.members-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+}
+
+.member {
+    text-align: center;
+    display: grid;
+    gap: 0.8rem;
+}
+
+.member .jobtitle {
+    background-color: var(--gray-300);
+    display: inline;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    margin: 0.5rem auto 2rem;
+}
+
+    .member .jobtitle
+
+
+    .card {
+        color: var(--card-text-color);
+        border: 1px solid var(--card-border-color);
+        background-color: var(--card-background-color);
+        box-shadow: var(--box-shadow);
+        padding: 2rem;
+        border-radius: 14px;
+    }

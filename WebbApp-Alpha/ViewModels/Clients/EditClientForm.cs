@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
-namespace Business.Models.Clients;
+namespace WebbApp_Alpha.ViewModels.Clients;
 
-public class AddClientForm
+public class EditClientForm
 {
+
+    public int Id { get; set; }
+
     [Display(Name = "Client Image", Prompt = "Select an image")]
     [DataType(DataType.Upload)]
     public IFormFile? ClientImage { get; set; }

@@ -1,7 +1,9 @@
-﻿using Business.Services;
-using Domain.Models;
+﻿using Business.Interfaces;
+using Business.Models;
+using Business.Models.Members;
 using Microsoft.AspNetCore.Mvc;
-using WebbApp_Alpha.Models;
+using WebbApp_Alpha.ViewModels;
+using WebbApp_Alpha.ViewModels.Members;
 
 namespace WebbApp_Alpha.Controllers;
 
@@ -19,44 +21,61 @@ public class AuthController(IAuthService authService) : Controller
 
     [HttpPost]
 
-    public async Task<IActionResult> Register(SignUpFormModel formData)
+    public async Task<IActionResult> Register(SignUpFormModel model)
     {
         if (ModelState.IsValid)
         {
-            var result = await _authService.SignUpAsync(formData);
+            var member = new MemberSignUpModel
+            {
+               FirstName = model.FirstName,
+               LastName = model.LastName,
+               Email = model.Email,
+               Password = model.Password,
+
+            };
+
+            var result = await _authService.SignUpAsync(member);
             if (result)
                 return LocalRedirect("~/");
 
         }
 
         ViewBag.ErrorMessage = "Incorrect email or password.";
-        return View(formData);
+        return View(model);
     }
 
     
-    public IActionResult Login()
+    public IActionResult Login(string returnUrl = "~/")
     {
         ViewBag.ErrorMessage = "";
+        ViewBag.ReturnUrl = returnUrl;
 
         return View();
     }
 
     [HttpPost]
 
-    public async Task<IActionResult> Login(MemberLoginForm form, string returnUrl = "~/")
+    public async Task<IActionResult> Login(MemberLoginForm dto, string returnUrl = "~/")
     {
         ViewBag.ErrorMessage = "";
+        
 
         if (ModelState.IsValid)
         {
-            var result = await _authService.LoginAsync(form);
+            var loginModel = new LoginModel
+            {
+                Email = dto.Email,
+                Password = dto.Password,
+            };
+
+            var result = await _authService.LoginAsync(loginModel);
             if (result)
-                return Redirect(returnUrl);
+                return LocalRedirect(returnUrl);
 
         }
 
         ViewBag.ErrorMessage = "Incorrect email or password.";
-        return View(form);
+        return View(dto);
 
 
     }
@@ -64,8 +83,9 @@ public class AuthController(IAuthService authService) : Controller
 
 
 
-    public new IActionResult SignOut()
+    public async Task<IActionResult> Signout()
     {
-        return View();
+        await _authService.SignoutAsync();
+        return LocalRedirect("~/");
     }
 }

@@ -1,19 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Business.Models.Members;
+namespace WebbApp_Alpha.ViewModels.Clients;
 
-public class AddMemberForm
+public class AddClientForm
 {
-    [Display(Name = "Member Image", Prompt = "Select an image")]
+    [Display(Name = "Client Image", Prompt = "Select an image")]
     [DataType(DataType.Upload)]
-    public IFormFile? MemberImage { get; set; }
+    public IFormFile? ClientImage { get; set; }
 
 
-    [Display(Name = "Member Name", Prompt = "Enter member name")]
+    [Display(Name = "Client Name", Prompt = "Enter client name")]
     [Required(ErrorMessage = "Required")]
     [DataType(DataType.Text)]
-    public string MemberName { get; set; } = null!;
+    public string ClientName { get; set; } = null!;
 
     [DataType(DataType.EmailAddress)]
     [Required(ErrorMessage = "Required")]

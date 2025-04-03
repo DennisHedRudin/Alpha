@@ -1,5 +1,5 @@
-﻿using Business.Models.Members;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebbApp_Alpha.ViewModels.Members;
 
 namespace WebbApp_Alpha.Controllers;
 

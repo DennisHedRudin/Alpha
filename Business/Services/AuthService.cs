@@ -1,35 +1,38 @@
 ﻿using Business.Factories;
+using Business.Interfaces;
+using Business.Models;
+using Business.Models.Members;
 using Data.Entities;
-using Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using WebbApp_Alpha.Models;
+
 
 namespace Business.Services;
 
-public interface IAuthService
-{
-    Task<bool> LoginAsync(MemberLoginForm loginForm);
-    Task<bool> SignUpAsync(SignUpFormModel SignUpForm);
-}
+
 
 public class AuthService(SignInManager<MemberEntity> signInManager, UserManager<MemberEntity> userManager) : IAuthService
 {
     private readonly SignInManager<MemberEntity> _signInManager = signInManager;
     private readonly UserManager<MemberEntity> _userManager = userManager;
 
-    public async Task<bool> LoginAsync(MemberLoginForm loginForm)
+    public async Task<bool> LoginAsync(LoginModel model)
     {
-        var result = await _signInManager.PasswordSignInAsync(loginForm.Email, loginForm.Password, false, false);
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
         return result.Succeeded;
     }
 
 
-    public async Task<bool> SignUpAsync(SignUpFormModel SignUpForm)
+    public async Task<bool> SignUpAsync(MemberSignUpModel SignUpForm)
     {
         var memberEntity = MemberFactory.Create(SignUpForm);
         
         var result = await _userManager.CreateAsync(memberEntity, SignUpForm.Password);
         return result.Succeeded;
+    }
+
+    public async Task SignoutAsync()
+    {
+        await _signInManager.SignOutAsync();
     }
 }
 

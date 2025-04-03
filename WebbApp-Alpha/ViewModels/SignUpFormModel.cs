@@ -1,12 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebbApp_Alpha.Models
+namespace WebbApp_Alpha.ViewModels
 {
     public class SignUpFormModel
     {
         [Display(Name = "Full name", Prompt = "Your full name")]
         [Required(ErrorMessage = "You must enter your full name.")]
-        public string FullName { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+
+        [Display(Name = "Full name", Prompt = "Your full name")]
+        [Required(ErrorMessage = "You must enter your full name.")]
+        public string LastName { get; set; } = null!;
 
         [Display(Name = "Email", Prompt = "Your email")]
         [DataType(DataType.EmailAddress)]
@@ -28,7 +32,8 @@ namespace WebbApp_Alpha.Models
 
         [Required(ErrorMessage = "You must accept the terms.")]
         [Display(Name = "Terms & Conditions", Prompt = "I accept the terms & conditions.")]
-        public bool TermsAndConditions { get; set; } 
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the terms and conditions.")]
+        public bool TermsAndConditions { get; set; }
 
     }
 }
