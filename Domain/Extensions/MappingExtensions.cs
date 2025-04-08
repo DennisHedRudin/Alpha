@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Data.Extentions;
+namespace Domain.Extentions;
 
 public static class MappingExtensions
 {

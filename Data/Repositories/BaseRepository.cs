@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Linq.Expressions;
 using Data.Context;
-using Data.Extentions;
 using Data.Models;
+using Domain.Extentions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity, TModel> where TEntity : class
 {
     protected readonly DataContext _context;
     protected readonly DbSet<TEntity> _table;
@@ -21,7 +21,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
     public virtual async Task<RepositoryResult<bool>> AddAsync(TEntity entity)
     {
         if (entity == null)
-            return new RepositoryResult<bool> { Success = false, StatusCode = 400, Error = "Entity can't be null."};
+            return new RepositoryResult<bool> { Success = false, StatusCode = 400, Error = "Entity can't be null." };
 
         try
         {
@@ -36,21 +36,54 @@ public abstract class BaseRepository<TEntity> where TEntity : class
         }
     }
 
-    public virtual async Task<RepositoryResult<IEnumerable<T>>> GetAllAsync()
+
+
+
+
+
+    public virtual async Task<RepositoryResult<IEnumerable<TSelect>>> GetAllAsync<TSelect>(Expression<Func<TEntity, TSelect>> selector, bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
     {
-        var entities = await _table.ToListAsync();
-        var result = entities.Select(entity => entity.MapTo<T>);
-        return new RepositoryResult<IEnumerable<T>> { Success = true, StatusCode = 200, Result = result };
+        IQueryable<TEntity> query = _table;
+
+        if (where != null)
+            query = query.Where(where);
+
+        if (includes != null && includes.Length != 0)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        if (sortBy != null)
+            query = orderByDescending
+                ? query.OrderByDescending(sortBy)
+                : query.OrderBy(sortBy);
+
+        var entities = await query.Select(selector).ToListAsync();
+
+        var result = entities.Select(entity => entity!.MapTo<TSelect>());
+        return new RepositoryResult<IEnumerable<TSelect>> { Success = true, StatusCode = 200, Result = result };
     }
 
-    public virtual async Task<RepositoryResult<T>> GetAsync<T>(Expression<Func<TEntity, bool>> findBy)
-    {
-        var entity = await _table.FirstOrDefaultAsync(findBy);
-        if(entity == null)
-            return new RepositoryResult<T> { Success = false, StatusCode = 404, Error = "Entity not found." }
 
-        var result = entity            
-            return new RepositoryResult<T> { Success = true, StatusCode = 200, Result = result };
+
+
+
+
+    public virtual async Task<RepositoryResult<TModel>> GetAsync(Expression<Func<TEntity, bool>> where, params Expression<Func<TEntity, object>>[] includes)
+    {
+
+        IQueryable<TEntity> query = _table;
+
+        if (includes != null && includes.Length != 0)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        var entity = await query.FirstOrDefaultAsync(where);
+
+        if (entity == null)
+            return new RepositoryResult<TModel> { Success = false, StatusCode = 404, Error = "Entity not found" };
+
+        var result = entity.MapTo<TModel>();
+        return new RepositoryResult<TModel> { Success = true, StatusCode = 200, Result = result };
     }
 
 
@@ -61,6 +94,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
             ? new RepositoryResult<bool> { Success = false, StatusCode = 404, Error = "Entity not found." }
             : new RepositoryResult<bool> { Success = true, StatusCode = 200 };
     }
+
 
 
     public virtual async Task<RepositoryResult<bool>> UpdateAsync(TEntity entity)
