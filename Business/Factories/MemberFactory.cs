@@ -1,6 +1,7 @@
 ﻿using Business.Models;
 using Business.Models.Members;
 using Data.Entities;
+using Domain.Models;
 
 
 namespace Business.Factories;
@@ -28,7 +29,7 @@ public class MemberFactory
             FirstName = entity.FirstName,
             LastName = entity.LastName,
             Email = entity.Email,
-            Phone = entity.PhoneNumber,
+            PhoneNumber = entity.PhoneNumber,
             JobTitle = entity.JobTitle,
             Adress = entity.Adress is not null ? new MemberAdress
             {

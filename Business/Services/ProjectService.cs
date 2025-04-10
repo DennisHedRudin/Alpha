@@ -1,5 +1,6 @@
 ﻿namespace Business.Services;
 
-internal class ProjectService
+public class ProjectService
 {
+
 }

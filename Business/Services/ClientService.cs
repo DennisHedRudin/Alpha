@@ -1,5 +1,17 @@
-﻿namespace Business.Services;
+﻿using Business.Interfaces;
+using Business.Models;
+using Data.Repositories;
+using Domain.Extensions;
 
-internal class ClientService
+namespace Business.Services;
+
+public class ClientService(IClientRepository clientRepository) : IClientService
 {
+    private readonly IClientRepository _clientRepository = clientRepository;
+
+    public async Task<ClientResult> GetClientsAsync()
+    {
+        var result = await _clientRepository.GetAll();
+        return result.MapTo<ClientResult>();
+    }
 }

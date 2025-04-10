@@ -64,6 +64,20 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
     }
 
 
+    public virtual async Task<RepositoryResult<IEnumerable<TEntity>>> GetAll()
+    {
+        try
+        {
+            var entities = await _table.ToListAsync();
+
+            return new RepositoryResult<IEnumerable<TEntity>>{ Success = true, StatusCode = 200, Result = entities };
+        }
+        catch (Exception ex)
+        {
+            return new RepositoryResult<IEnumerable<TEntity>> { Success = false, StatusCode = 500, Error = ex.Message};
+        }
+    }
+
 
 
 
