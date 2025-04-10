@@ -1,4 +1,5 @@
 ﻿using Business.Models.Members;
+using Domain.Models;
 
 namespace Business.Interfaces
 {

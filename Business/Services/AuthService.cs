@@ -1,7 +1,6 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Business.Models;
-using Business.Models.Members;
 using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 

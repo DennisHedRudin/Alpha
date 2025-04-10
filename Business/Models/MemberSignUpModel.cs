@@ -1,4 +1,4 @@
-﻿namespace Business.Models.Members;
+﻿namespace Business.Models;
 
 public class MemberSignUpModel
 {

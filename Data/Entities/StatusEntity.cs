@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Entities;
 
-[Index(nameof(Status), IsUnique = true)]
+[Index(nameof(StatusName), IsUnique = true)]
 public class StatusEntity
 {
     [Key]
     public int Id { get; set; }
-    public string Status { get; set; } = null!;
+    public string StatusName { get; set; } = null!;
 
     public virtual ICollection<ProjectEntity> Projects { get; set; } = [];
 }

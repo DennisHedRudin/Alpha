@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Domain.Extentions;
+namespace Domain.Extensions;
 
 public static class MappingExtensions
 {
@@ -8,18 +8,18 @@ public static class MappingExtensions
     {
         ArgumentNullException.ThrowIfNull(source, nameof(source));
 
-        TDestination destination = Activator.CreateInstance<TDestination>()!;
+        TDestination destination = (TDestination)Activator.CreateInstance(typeof(TDestination))!;
 
         var sourceProperties = source.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var destinationProperties = destination.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        foreach ( var destiantionProperty in destinationProperties )
+        foreach (var destinationProperty in destinationProperties)
         {
-            var sourceProperty = sourceProperties.FirstOrDefault(x => x.Name == destiantionProperty.Name && x.PropertyType == destiantionProperty.PropertyType);
-            if (sourceProperty != null && destiantionProperty.CanWrite)
+            var sourceProperty = sourceProperties.FirstOrDefault(x => x.Name == destinationProperty.Name && x.PropertyType == destinationProperty.PropertyType);
+            if (sourceProperty != null && destinationProperty.CanWrite)
             {
                 var value = sourceProperty.GetValue(source);
-                destiantionProperty.SetValue(destination, null);
+                destinationProperty.SetValue(destination, value);
             }
         }
         return destination;

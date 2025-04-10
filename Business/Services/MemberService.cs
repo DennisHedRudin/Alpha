@@ -1,9 +1,9 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Data.Entities;
-using Business.Models.Members;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Domain.Models;
 
 namespace Business.Services;
 

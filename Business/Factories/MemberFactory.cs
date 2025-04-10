@@ -1,4 +1,5 @@
-﻿using Business.Models.Members;
+﻿using Business.Models;
+using Business.Models.Members;
 using Data.Entities;
 
 

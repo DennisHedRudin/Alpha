@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Data.Models;
 
-namespace Data.Repositories
+namespace Data.Repositories.BaseRepository
 {
     public interface IBaseRepository<TEntity, TModel> where TEntity : class
     {

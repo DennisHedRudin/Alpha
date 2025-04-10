@@ -2,10 +2,10 @@
 using System.Linq.Expressions;
 using Data.Context;
 using Data.Models;
-using Domain.Extentions;
+using Domain.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Repositories;
+namespace Data.Repositories.BaseRepository;
 
 public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity, TModel> where TEntity : class
 {

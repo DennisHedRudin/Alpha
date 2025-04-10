@@ -2,6 +2,7 @@ using Business.Interfaces;
 using Business.Services;
 using Data.Context;
 using Data.Entities;
+using Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 var app = builder.Build();
 app.UseHsts();
