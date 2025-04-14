@@ -38,6 +38,27 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
 
 
 
+    public virtual async Task<RepositoryResult<IEnumerable<TModel>>> GetAllAsync( bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
+    {
+        IQueryable<TEntity> query = _table;
+
+        if (where != null)
+            query = query.Where(where);
+
+        if (includes != null && includes.Length != 0)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        if (sortBy != null)
+            query = orderByDescending
+                ? query.OrderByDescending(sortBy)
+                : query.OrderBy(sortBy);
+
+        var entities = await query.ToListAsync();
+
+        var result = entities.Select(entity => entity!.MapTo<TModel>());
+        return new RepositoryResult<IEnumerable<TModel>> { Success = true, StatusCode = 200, Result = result };
+    }
 
 
 
@@ -63,21 +84,7 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
         return new RepositoryResult<IEnumerable<TSelect>> { Success = true, StatusCode = 200, Result = result };
     }
 
-
-    public virtual async Task<RepositoryResult<IEnumerable<TEntity>>> GetAll()
-    {
-        try
-        {
-            var entities = await _table.ToListAsync();
-
-            return new RepositoryResult<IEnumerable<TEntity>>{ Success = true, StatusCode = 200, Result = entities };
-        }
-        catch (Exception ex)
-        {
-            return new RepositoryResult<IEnumerable<TEntity>> { Success = false, StatusCode = 500, Error = ex.Message};
-        }
-    }
-
+  
 
 
 

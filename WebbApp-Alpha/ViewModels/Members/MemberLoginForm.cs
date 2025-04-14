@@ -13,4 +13,6 @@ public class MemberLoginForm
     [Display(Name = "Password", Prompt = "Enter password")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
+
+    public bool IsPersistent { get; set; }
 }

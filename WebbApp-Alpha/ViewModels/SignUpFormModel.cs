@@ -4,11 +4,11 @@ namespace WebbApp_Alpha.ViewModels
 {
     public class SignUpFormModel
     {
-        [Display(Name = "Full name", Prompt = "Your full name")]
+        [Display(Name = "First name", Prompt = "Your first name")]
         [Required(ErrorMessage = "You must enter your full name.")]
         public string FirstName { get; set; } = null!;
 
-        [Display(Name = "Full name", Prompt = "Your full name")]
+        [Display(Name = "Last name", Prompt = "Your last name")]
         [Required(ErrorMessage = "You must enter your full name.")]
         public string LastName { get; set; } = null!;
 

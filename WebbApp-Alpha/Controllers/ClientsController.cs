@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using WebbApp_Alpha.ViewModels.Clients;
 
 
 namespace WebbApp_Alpha.Controllers;
 
 
-public class ClientsController : Controller
+public class ClientsController(IClientService clientService) : Controller
 {
-    //private readonly ClientService _clientService; 
+    private readonly IClientService _clientService = clientService;
 
     [HttpPost]
-    public IActionResult AddClient(AddClientForm form)
+    public async Task<IActionResult> AddClient(AddClientForm form)
     {
         if (!ModelState.IsValid)
         {
@@ -24,17 +25,17 @@ public class ClientsController : Controller
             return BadRequest(new { success = false, errors });
         }
 
-        //var result = await _clientService.AddClientAsync(form);
-        //if (result)
-        //{
-        //    return Ok(new { success = true });
-        //}
-        //else 
-        //{
-        //    return Problem("Unable to submit data.");
-        //}
+        var result = await _clientService.AddClientAsync(form);
+        if (result)
+        {
+            return Ok(new { success = true });
+        }
+        else
+        {
+            return Problem("Unable to submit data.");
+        }
 
-        return Ok(new { seccess = true });
+        
 
 
     }

@@ -1,12 +1,13 @@
 ﻿using Business.Models;
+using Domain.Models;
 
 
 namespace Business.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> LoginAsync(LoginModel model);
-        Task SignoutAsync();
-        Task<bool> SignUpAsync(MemberSignUpModel SignUpForm);
+        Task<AuthResult> LoginAsync(LoginModelData model);
+        Task<AuthResult> SignoutAsync();
+        Task<AuthResult> SignUpAsync(MemberSignUpModel SignUpForm);
     }
 }

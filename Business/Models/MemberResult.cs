@@ -7,3 +7,5 @@ public class MemberResult : ServiceResult
     public IEnumerable<Member>? Member { get; set; }
 }
 
+
+

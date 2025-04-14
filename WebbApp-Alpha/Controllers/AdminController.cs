@@ -19,7 +19,7 @@ public class AdminController(IMemberService memberService) : Controller
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> Members()
     {
-        var members = await _memberService.GetAllMembers();
+        var members = await _memberService.GetMembersAsync();
 
         return View(members);
     }
