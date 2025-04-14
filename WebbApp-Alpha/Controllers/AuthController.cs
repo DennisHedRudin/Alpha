@@ -26,10 +26,9 @@ public class AuthController(IAuthService authService) : Controller
 
         var signUpFormData = model.MapTo<MemberSignUpModel>();
         var result = await _authService.SignUpAsync(signUpFormData);
-        if (result.Success)
-        {
-            return LocalRedirect("~/");
-        }          
+
+        if (result.Success)                   
+            return LocalRedirect("~/");                 
 
       
 

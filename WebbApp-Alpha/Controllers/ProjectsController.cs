@@ -23,15 +23,18 @@ public class ProjectsController(IProjectService projectService) : Controller
     [HttpPost]
     public async IActionResult AddProject(AddProjectViewModel model)
     {
-        var addProjectFormData = model.MapTo<AddProjectFormData> 
+        var addProjectFormData = model.MapTo<AddProjectFormData>(); 
 
-        var result = await _projectService.CreateProjectAsync(model);
+        var result = await _projectService.CreateProjectAsync(addProjectFormData);
+
         return View();
     }
 
     [HttpPost]
     public IActionResult UpdateProject(EditProjectViewModel model)
     {
+        var editProjectFormData = model.MapTo<EditProjectForm>();
+
         return View();
     }
 
