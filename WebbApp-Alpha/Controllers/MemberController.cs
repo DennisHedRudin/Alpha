@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Services;
+using Domain.Extensions;
+using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 using WebbApp_Alpha.ViewModels.Members;
 
 namespace WebbApp_Alpha.Controllers;
 
-public class MemberController : Controller
+public class MemberController(MemberService memberService) : Controller
 {
-    //private readonly MemberService _memberService;
+    private readonly MemberService _memberService = memberService;
 
     [HttpPost]
-    public IActionResult AddMember(AddMemberForm form)
+    public async Task<IActionResult> AddMember(AddMemberForm form)
     {
         if (!ModelState.IsValid)
         {
@@ -22,17 +25,18 @@ public class MemberController : Controller
             return BadRequest(new { success = false, errors });
         }
 
-        //var result = await _clientService.AddClientAsync(form);
-        //if (result)
-        //{
-        //    return Ok(new { success = true });
-        //}
-        //else 
-        //{
-        //    return Problem("Unable to submit data.");
-        //}
+        var member = form.MapTo<MemberSignUpModel>();
 
-        return Ok(new { success = true });
+        var result = await _memberService.CreateMemberAsync(member);
+        if (result.Success)
+        {
+            return Ok(new { success = true });
+        }
+        else
+        {
+            return Problem("Unable to submit data.");
+        }
+        
 
 
     }
@@ -63,7 +67,7 @@ public class MemberController : Controller
         //    return Problem("Unable to submit data.");
         //}
 
-        return Ok(new { seccess = true });
+        return Ok(new { success = true });
 
     }
 }

@@ -6,6 +6,6 @@ namespace Business.Interfaces
     public interface IClientService
     {
         Task<ClientResult> GetClientsAsync();
-        Task<ClientResult> AddClientAsync(Client form)
+        Task<ClientResult> AddClientAsync(Client form);
     }
 }

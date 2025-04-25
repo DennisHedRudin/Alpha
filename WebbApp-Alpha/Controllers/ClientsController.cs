@@ -1,4 +1,6 @@
 ﻿using Business.Interfaces;
+using Domain.Extensions;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebbApp_Alpha.ViewModels.Clients;
 
@@ -25,8 +27,10 @@ public class ClientsController(IClientService clientService) : Controller
             return BadRequest(new { success = false, errors });
         }
 
-        var result = await _clientService.AddClientAsync(form);
-        if (result)
+        var model = form.MapTo<Client>();
+
+        var result = await _clientService.AddClientAsync(model);
+        if (result.Success)
         {
             return Ok(new { success = true });
         }

@@ -1,6 +1,8 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
     const previewSize = 150
 
+    initDarkModeToggle();
+
     const modalButtons = document.querySelectorAll('[data-modal="true"]')
     modalButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -49,10 +51,11 @@
         })
     })
 
-
-    const forms = document.querySelectorAll('form')
+    const forms = document.querySelectorAll('form');
     forms.forEach(form => {
-        form.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', async (e) => {            
+            if (!form.classList.contains('ajax-form')) return;
+
             e.preventDefault()
 
             
@@ -102,7 +105,45 @@
         })
     })
 
+    const profileMenu = document.querySelector('#profileMenu');
+    const dropdownMenu = document.querySelector('#dropdownMenu');
+
+    if (profileMenu && dropdownMenu) {
+        profileMenu.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('active');
+        });
+
+        // Stäng dropdown om man klickar utanför
+        document.addEventListener('click', (e) => {
+            if (!dropdownMenu.contains(e.target) && !profileMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+    }
+
 })
+
+function initDarkModeToggle() {
+    const darkModeSwitch = document.querySelector('#darkModeSwitch');
+    if (!darkModeSwitch) return;
+
+    // Kolla om dark mode redan är sparat i localStorage
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        darkModeSwitch.checked = true;
+    }
+
+    darkModeSwitch.addEventListener('change', () => {
+        if (darkModeSwitch.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+}
 
 function clearErrorMessages(form) {
     form.querySelectorAll('[data-val="true"]').forEach(input => {

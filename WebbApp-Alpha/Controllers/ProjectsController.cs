@@ -1,6 +1,8 @@
 ﻿using Business.Interfaces;
+using Domain.Extensions;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using WebbApp_Alpha.ViewModels.Projects;
 
 namespace WebbApp_Alpha.Controllers;
 
@@ -11,17 +13,18 @@ public class ProjectsController(IProjectService projectService) : Controller
 
     public async Task<IActionResult> AllProjects()
     {
+        
 
         var model = new ProjectsViewModel
         {
-            ProjectsController = await _projectService.GetProjectsAsync(),
+            Projects = (await _projectService.GetProjectsAsync()).Result,
         };
 
         return View(model);
     }
 
     [HttpPost]
-    public async IActionResult AddProject(AddProjectViewModel model)
+    public async Task<IActionResult> AddProject(AddProjectForm model)
     {
         var addProjectFormData = model.MapTo<AddProjectFormData>(); 
 
@@ -33,7 +36,7 @@ public class ProjectsController(IProjectService projectService) : Controller
     [HttpPost]
     public IActionResult UpdateProject(EditProjectViewModel model)
     {
-        var editProjectFormData = model.MapTo<EditProjectForm>();
+        var editProjectFormData = model.MapTo<EditProjectViewModel>();
 
         return View();
     }

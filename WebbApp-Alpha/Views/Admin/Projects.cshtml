@@ -19,3 +19,5 @@
         <a class="status-btn @(Context.Request.Path == "/CompletedProjects" ? "active": "")" asp-action="CompletedProjects" asp-controller="Projects">COMPLETE [0]</a>
     </div>
 </div>
+
+<partial name="Partials/_projectList" />

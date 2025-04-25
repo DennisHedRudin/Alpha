@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Domain.Models.Project>
+
+<partial name="Partials/Sections/_addProjectForm" />
+
+
+<div class="project-list">
+    <div class="project-card">
+        <div class="card-header">
+            <div class="project-image">
+
+            </div>
+            <span class="project-name"></span>
+            <span class="client-name"></span>
+            <div id="project-actions-container">
+                <button>
+                    <i class="fa-duotone fa-solid fa-ellipsis"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="projects">
+    @if (Model != null && Model.Any())
+    {
+        <div class="project-list">
+            @foreach (var project in Model)
+            {
+                <div class="project-card">
+                    <!-- Header -->
+                    <div class="project-header">
+                        <div class="project-image">
+                            <img src="@(project.Image ?? " /images/default-project.png")" alt="Project Image" />
+                        </div>
+                        <div class="project-info">
+                            <h4>@project.ProjectName</h4>
+                            <span class="client-name">@project.Client.ClientName</span>
+                        </div>
+                        <div class="project-actions">
+                            <div class="dropdown">
+                                <button class="dots-btn">•••</button>
+                                <div class="dropdown-content">
+                                    <a asp-action="UpdateProject" asp-controller="Projects" asp-route-id="@project.Id">Edit</a>
+                                    <form method="post" asp-action="DeleteProject" asp-controller="Projects">
+                                        <input type="hidden" name="id" value="@project.Id" />
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="project-description">@project.Description</p>
+
+                    <!-- Footer (time left + members) -->
+                    <div class="project-footer">
+                        <div class="time-left">
+                            @if (project.EndDate.HasValue)
+                            {
+                                var daysLeft = (project.EndDate.Value - DateTime.Now).Days;
+                                <span>@(daysLeft > 0 ? $"{daysLeft} days left" : "Completed")</span>
+                            }
+                            else
+                            {
+                                <span>Ongoing</span>
+                            }
+                        </div>
+                        <div class="project-members">
+                            <div class="member-images">
+                                <!-- Här visas profilbilder för kopplade medlemmar -->
+                                <img src="/images/Avatars/1.svg" alt="Member" class="member-avatar" />
+                                <img src="/images/Avatars/2.svg" alt="Member" class="member-avatar" />
+                                <!-- Du byter ut ovan mot loop på project.Member -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No projects found.</p>
+    }
+
+</div>

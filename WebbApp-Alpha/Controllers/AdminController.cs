@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebbApp_Alpha.Controllers;
 
 
-[Authorize]
+//[Authorize]
 public class AdminController(IMemberService memberService) : Controller
 {
     private readonly IMemberService _memberService = memberService;
@@ -16,7 +16,7 @@ public class AdminController(IMemberService memberService) : Controller
         return View();
     }
 
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public async Task<IActionResult> Members()
     {
         var members = await _memberService.GetMembersAsync();
@@ -24,7 +24,7 @@ public class AdminController(IMemberService memberService) : Controller
         return View(members);
     }
 
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public IActionResult Clients()
     {
         return View();
