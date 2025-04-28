@@ -6,14 +6,15 @@
     </form>
 
     <div class="header-icons">
-        <a href="#">
-            <img src="/images/Notification.svg" alt="Notification">
-        </a>       
-        <a href="#" class="profile-pic" id="profileMenu">
+
+        <partial name="Partials/Notification/_NotificationDropdownPartial" />
+
+        <a href="#" class="profile-pic" id="profileMenu" data-type="dropdown" data-target="#dropdownMenu">
             <img src="/images/Avatars/10.svg" alt="Avatar">
         </a>
     </div>
 
 </div>      
+
 
 <partial name="Partials/Components/_DropdownMenu" />

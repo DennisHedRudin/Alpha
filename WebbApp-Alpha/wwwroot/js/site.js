@@ -2,6 +2,7 @@
     const previewSize = 150
 
     initDarkModeToggle();
+    initializeDropdowns();
 
     const modalButtons = document.querySelectorAll('[data-modal="true"]')
     modalButtons.forEach(button => {
@@ -104,31 +105,63 @@
 
         })
     })
-
-    const profileMenu = document.querySelector('#profileMenu');
-    const dropdownMenu = document.querySelector('#dropdownMenu');
-
-    if (profileMenu && dropdownMenu) {
-        profileMenu.addEventListener('click', (e) => {
-            e.preventDefault();
-            dropdownMenu.classList.toggle('active');
-        });
-
-        // Stäng dropdown om man klickar utanför
-        document.addEventListener('click', (e) => {
-            if (!dropdownMenu.contains(e.target) && !profileMenu.contains(e.target)) {
-                dropdownMenu.classList.remove('active');
-            }
-        });
-    }
+    
 
 })
+
+
+function closeAllDropdowns(exceptDropdown, dropdownElements) {
+    dropdownElements.forEach(dropdown => {
+        if (dropdown != exceptDropdown) {
+            dropdown.classList.remove('show')
+        }
+    })
+}
+
+function initializeDropdowns() {
+    const dropdownTriggers = document.querySelectorAll('[data-type="dropdown"]')
+    const dropdownElements = new Set()
+
+    dropdownTriggers.forEach(trigger => {
+        const targetSelector = trigger.getAttribute('data-target')
+        if (targetSelector) {
+            const dropdown = document.querySelector(targetSelector)
+            if (dropdown) {
+                dropdownElements.add(dropdown)
+            }
+        } 
+    })
+
+    dropdownTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation()
+            const targetSelector = trigger.getAttribute('data-target')
+            if (!targetSelector) return
+            const dropdown = document.querySelector(targetSelector)
+            if (!dropdown) return
+
+            closeAllDropdowns(dropdown, dropdownElements)
+            dropdown.classList.toggle('show')
+        })
+ 
+    })
+
+    dropdownElements.forEach(dropdown => {
+        dropdown.addEventListener('click', (e) => {
+            e.stopPropagation()
+        })
+    })
+
+    document.addEventListener('click', () => {
+        closeAllDropdowns(null, dropdownElements)
+    })
+}
 
 function initDarkModeToggle() {
     const darkModeSwitch = document.querySelector('#darkModeSwitch');
     if (!darkModeSwitch) return;
 
-    // Kolla om dark mode redan är sparat i localStorage
+    
     if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         darkModeSwitch.checked = true;

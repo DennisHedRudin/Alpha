@@ -352,7 +352,7 @@ a {
     border: none;
     background-color: var(--background);
     font-family: var(--font-standard);
-    input
+    input:
 
 {
     width: 100%;
@@ -398,7 +398,7 @@ a {
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s linear 0.4s;
 }
 
-    #dropdownMenu.active {
+    #dropdownMenu.show {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -445,7 +445,7 @@ a {
 }
 
 
-.profile-dropdown.active .dropdown-menu {
+.profile-dropdown.show .dropdown-menu {
     display: block;
 }
 
@@ -656,7 +656,7 @@ a {
 }
 
     .btn-close::after {
-        content: '\U+F659';
+        content: '\f00d';
     }
 
 .btn-submit {
@@ -968,8 +968,123 @@ table {
     height: 100%;
 }
 
-/*badge*/
+/*Notifications*/
 
+.notfication-dropdown-container {
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+}
+
+    .notfication-dropdown-container .btn.alert-notification {
+        position: relative;
+        border: none;
+        transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    }
+
+        .notfication-dropdown-container .btn.alert-notification:hover {
+            background-color: var(--gray-100) !important;
+            border: 0px solid var(--gray-100);
+            color: var(--text);
+            transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        }
+
+.notification-dropdown-container .notification-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: var(--surface);
+    border: var(--border);
+    border-radius: 16px;
+    min-width: 450px;
+    min-height: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 999;
+    right: 110px;
+}
+
+    .notification-dropdown-container .notification-dropdown.show {
+        display: block;
+    }
+
+    .notification-dropdown-container .notification-dropdown .notification-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px;
+        color: var(--heading-color);
+        font-weight: 400;
+        border-radius: 14px;
+        margin: 0.5rem;       
+    }
+
+    .notification-dropdown-container .notification-dropdown .notification-number {
+        background: #FF6640;
+        color: var(--surface);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.9em;
+    }
+
+
+.notification-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "img message btn" "img time btn";
+    align-items: center;
+    column-gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 14px;
+    transition: background-color 0.1s ease-in-out;
+}
+
+    .notification-item .image {
+        grid-area: img;
+        height: 48px;
+        width: 48px;
+    }
+
+    .notification-item .image.user {
+        border-radius: 50%;
+    }
+
+    .notification-item .image.project {
+        border-radius: 14px;
+    }
+
+    .notification-item .message {
+        grid-area: message;
+    }
+
+    .notification-item .time{
+        grid-area: time;
+        font-size: 0.9em;
+        color: var(--gray-400);
+    }
+
+    .notification-item .btn-close{
+        grid-area: btn;
+        opacity: 0;
+        transition: opacity 0.1s ease-in-out;
+        pointer-events: none;
+    }
+
+    .notification-item:hover {
+        background-color: var(--gray-200);
+    }
+
+        .notification-item:hover .btn-close {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+/*badge*/
 .badge {
     display: inline-block;
     border-radius: 10px;
