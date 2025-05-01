@@ -350,7 +350,7 @@ a {
 .search-bar {
     flex-grow: 1;
     border: none;
-    background-color: var(--background);
+    background-color: var(--border-200);
     font-family: var(--font-standard);
     input:
 

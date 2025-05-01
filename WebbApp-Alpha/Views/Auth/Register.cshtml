@@ -6,17 +6,21 @@
 }
 
 <section id="signup" class="center-content">
-	@* <partial name="Partials/Sections/_CreateFormPartial" />	 *@
+	
     <div class="center-screen">
         <div class="form-container">
 
-            <form asp-action="Register" method="post" enctype="multipart/form-data" novalidate>
+            <form asp-controller="auth" asp-action="ExternalSignIn" method="post" class="external-account" novalidate>
                 <div class="form-head">
                     <h1>@ViewData["Title"]</h1>
-                    <button class="btn btn-gray google"><img src="/images/google-icon.svg" alt="">Sign upp with google</button>
-                    <div class="or-line"></div>
+                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                    <button type="submit" name="provider" value="Google" class="btn btn-gray google">Sign in with Google</button>
                     <p>OR</p>
-                </div>
+                    <div />
+            </form>
+
+            <form asp-action="Register" method="post" enctype="multipart/form-data" novalidate>
+                
 
 
                 <div class="mb-3 form-group">

@@ -16,5 +16,6 @@ public class MemberEntity : IdentityUser
     public virtual MemberAddressEntity? Adress { get; set; }
 
     public virtual ICollection<ProjectEntity> Projects { get; set; } = [];
+    public ICollection<NotificationDissmissEntity> DissmissedNotifications { get; set; } = [];
 
 }

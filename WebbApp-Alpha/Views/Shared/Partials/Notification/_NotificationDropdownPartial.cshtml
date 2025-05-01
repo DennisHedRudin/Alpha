@@ -20,3 +20,85 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+	const connection = new SignalR.HubConnectionBuilder()
+		.withUrl("/notificationHub")
+		.build()
+
+	connection.on("RecevieNotification", function(notification) {
+		const container = document.querySelection('.notifications')
+
+		const item = document.createEmelement('div')
+		item.className = 'notification-item'
+		item.setAttribute('data-id', notification.id)
+		item.innerHtml = 
+		`		
+			<img class="image" src="${notification.icon}"/>
+			<div class="message">${notification.message}</div>
+			<div class="time" data-created="${new Date(notification.created).toISOString()}">${notification.created}</div>
+			<button class="btn-close" onclick="dismissNotification('${notification.id}')"></button>
+		`
+		container.insertBefore(item, notification.firstChild)
+
+		updateRelativeTimes()
+		updateNotificationCount()
+	})
+
+	connection.on("notificationDismissed", function(notificationId)){
+		removeNotification(notificationId)
+	}
+
+	connection.start().catch(error => console.error(error))
+
+	async function dismissNotification(notificationId) {
+		try {
+
+			const res = await fetch (`/api/notifications/dismiss/${notificationId}`, { method : `POST`})
+			if (res.ok) {
+				removeNotification(notificationId)
+			}
+			else {
+				console.error('Error removing notification:')
+			}
+
+
+		}
+		catch (error)
+		{
+			console.error('Error removing notification: ', error)
+		}
+	}
+
+	function removeNotification(notificationId) {
+			const element = document.querySelector(`.notification-item[data-id="${notificationId}"]`)
+				if (element) {
+					element.remove()
+					updateNotificationCount()
+				}
+	}
+
+	function updateNotificationCount() {
+		const notifications = document.querySelector('.notifications')
+		const notificationNumber = document.querySelector('.notification-number')
+		const notificationDropdownButton = document.querySelector('#notification-dropdown-button')
+		const count = notifications.querySelectorAll('.notification-item').length
+
+		if (notificationNumber) {
+			notificationNumber.textContent = count
+		}
+
+		let dot = notificationDropdownButton.querySelector('.dot.dot-red')
+		if (count > 0 && !dot) {
+			dot = document.createElement ('div')
+			dot.className = ' dot dot-red'
+			notificationDropdownButton.appendChild(dot)
+		}
+
+		if (count === 0 && dot) {
+			dot.remove()
+		}
+	}
+
+</script>

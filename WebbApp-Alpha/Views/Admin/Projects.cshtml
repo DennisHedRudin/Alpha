@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebbApp_Alpha.ViewModels.Projects.ProjectsViewModel
+@{
     ViewData["Title"] = "Projects";
 }
 
@@ -20,4 +21,4 @@
     </div>
 </div>
 
-<partial name="Partials/_projectList" />
+@await Html.PartialAsync("Partials/_projectList")

@@ -13,14 +13,16 @@ public class ProjectsController(IProjectService projectService) : Controller
 
     public async Task<IActionResult> AllProjects()
     {
-        
+        var projects = (await _projectService.GetProjectsAsync()).Result;
 
-        var model = new ProjectsViewModel
+        var viewModel = new ProjectsViewModel
         {
-            Projects = (await _projectService.GetProjectsAsync()).Result,
+            Projects = projects,
+            AddForm = new AddProjectForm(),
+            EditForm = new EditProjectViewModel()
         };
 
-        return View(model);
+        return View(viewModel);
     }
 
     [HttpPost]
