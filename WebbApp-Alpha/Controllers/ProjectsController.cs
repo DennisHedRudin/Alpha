@@ -11,22 +11,10 @@ public class ProjectsController(IProjectService projectService) : Controller
 {
     private readonly IProjectService _projectService = projectService;
 
-    public async Task<IActionResult> AllProjects()
-    {
-        var projects = (await _projectService.GetProjectsAsync()).Result;
-
-        var viewModel = new ProjectsViewModel
-        {
-            Projects = projects,
-            AddForm = new AddProjectForm(),
-            EditForm = new EditProjectViewModel()
-        };
-
-        return View(viewModel);
-    }
+    
 
     [HttpPost]
-    public async Task<IActionResult> AddProject(AddProjectForm model)
+    public async Task<IActionResult> AddProject(AddProjectViewModel model)
     {
         var addProjectFormData = model.MapTo<AddProjectFormData>(); 
 
@@ -36,9 +24,9 @@ public class ProjectsController(IProjectService projectService) : Controller
     }
 
     [HttpPost]
-    public IActionResult UpdateProject(EditProjectViewModel model)
+    public IActionResult UpdateProject(EditProjectForm model)
     {
-        var editProjectFormData = model.MapTo<EditProjectViewModel>();
+        var editProjectFormData = model.MapTo<EditProjectForm>();
 
         return View();
     }

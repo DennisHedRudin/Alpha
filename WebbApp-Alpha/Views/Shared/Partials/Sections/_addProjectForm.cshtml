@@ -1,4 +1,4 @@
-﻿@model WebbApp_Alpha.ViewModels.Projects.AddProjectForm
+﻿@model AddProjectViewModel
 
 <div id="addProjectModal" class="modal">
     <div class="modal-content">
@@ -8,13 +8,13 @@
         </div>
 
         <form method="post" asp-action="AddProject" asp-controller="Projects" enctype="multipart/form-data" novalidate class="ajax-form">
-            <!-- Project Image -->
+            
             <div class="image-previewer square">
                 <img src="" class="image-preview" />
                 <input asp-for="ProjectImage" accept="image/*" class="hide" />
             </div>
 
-            <!-- Project Name -->
+            
             <div class="form-group">
                 <label asp-for="ProjectName"></label>
                 <div class="field-group">
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <!-- Client Selection -->
+            
             <div class="form-group">
                 <label asp-for="ClientId"></label>
                 <div class="field-group">
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <!-- Description -->
+            
             <div class="form-group">
                 <label asp-for="Description"></label>
                 <div class="field-group">
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <!-- Dates -->
+           
             <div class="form-group">
                 <label asp-for="StartDate"></label>
                 <div class="field-group">
@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <!-- Budget -->
+            
             <div class="form-group">
                 <label asp-for="Budget"></label>
                 <div class="field-group">
@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <!-- Members Selection -->
+            
             <div class="form-group">
                 <label asp-for="MemberId"></label>
                 <div class="field-group">

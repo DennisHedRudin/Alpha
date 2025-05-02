@@ -1,7 +1,10 @@
 ﻿@model WebbApp_Alpha.ViewModels.Projects.ProjectsViewModel
+
 @{
     ViewData["Title"] = "Projects";
+   
 }
+
 
 
 
@@ -21,4 +24,16 @@
     </div>
 </div>
 
-@await Html.PartialAsync("Partials/_projectList")
+<section class="project-list">
+    @if(Model?.Project != null && Model.Projects.Any()){
+        @foreach (var project in Model.Projects)
+        {
+            @await Html.PartialAsync("Partials/Projects/_ProjectListItemPartial", project)
+        }
+    }
+    
+    
+</section>
+
+@await Html.PartialAsync("Partials/Sections/_addProjectForm", Model.AddForm)
+@await Html.PartialAsync("Partials/Projects/_editProjectForm", Model.EditForm)

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebbApp_Alpha.ViewModels.Projects;
 
-public class AddProjectForm
+public class AddProjectViewModel
 {
     [Display(Name = "Project Image", Prompt = "Select an image")]
     [DataType(DataType.Upload)]
@@ -37,4 +38,7 @@ public class AddProjectForm
     [Display(Name = "Budget", Prompt = "0")]
     [Range(0, double.MaxValue, ErrorMessage = "Budget must be a positive number")]
     public decimal? Budget { get; set; }
+
+    public IEnumerable<SelectListItem> Clients { get; set; } = [];
+    public IEnumerable<SelectListItem> Members { get; set;} = [];
 }

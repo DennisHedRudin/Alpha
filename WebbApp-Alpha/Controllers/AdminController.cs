@@ -13,15 +13,13 @@ public class AdminController(IMemberService memberService, IProjectService proje
     private readonly IMemberService _memberService = memberService;
     private readonly IProjectService _projectService = projectService;
 
-    public async Task<IActionResult> Projects()
-    {
-        var result = await _projectService.GetProjectsAsync();
+    public IActionResult Projects()
+    {        
 
-        var viewModel = new ProjectsViewModel
+        var viewModel = new ProjectsViewModel()
         {
-            Projects = result.Result,
-            AddForm = new AddProjectForm(),
-            EditForm = new EditProjectViewModel()
+            Projects = [new(), new()],
+            
         };
 
         return View(viewModel);

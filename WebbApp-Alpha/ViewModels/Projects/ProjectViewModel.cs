@@ -1,10 +1,12 @@
-﻿using Domain.Models;
+﻿namespace WebbApp_Alpha.ViewModels.Projects;
 
-namespace WebbApp_Alpha.ViewModels.Projects;
-
-public class ProjectsViewModel
+public class ProjectViewModel
 {
-    public IEnumerable<Project> Projects { get; set; } = new List<Project>();
-    public AddProjectForm AddForm { get; set; } = new AddProjectForm();
-    public EditProjectViewModel EditForm { get; set; } = new EditProjectViewModel();
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string ProjectImage { get; set; } = null!;
+    public string ProjectName { get; set; } = null!;
+    public string ClientName { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string TimeLeft { get; set; } = null!;
+    public IEnumerable<string> Members { get; set; } = [];
 }
