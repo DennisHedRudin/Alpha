@@ -87,8 +87,8 @@ using (var scope = app.Services.CreateScope())
     app.MapStaticAssets();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Projects}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Projects}/{action=Index}/{id?}");
+    
 
 app.MapHub<NotificationHub>("/notificationHub");
 

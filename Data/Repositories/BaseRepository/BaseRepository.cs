@@ -125,7 +125,8 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
 
         try
         {
-            _table.Update(entity);
+            _context.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return new RepositoryResult<bool> { Success = true, StatusCode = 200 };
         }

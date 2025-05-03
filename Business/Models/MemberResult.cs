@@ -4,7 +4,7 @@ namespace Business.Models;
 
 public class MemberResult : ServiceResult
 {
-    public IEnumerable<Member>? Member { get; set; }
+    public IEnumerable<Member>? Result { get; set; }
 }
 
 

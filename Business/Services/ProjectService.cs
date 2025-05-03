@@ -21,6 +21,9 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
         var projectEntity = formData.MapTo<ProjectEntity>();
         var statusResult = await _statusService.GetStatusByIdAsync(1);
+        if (!statusResult.Success)
+            return new ProjectResult { Success = false, StatusCode = statusResult.StatusCode, Error = statusResult.Error };
+
         var status = statusResult.Result;
 
         projectEntity.StatusId = status!.Id;
@@ -61,5 +64,44 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         return response.Success
             ? new ProjectResult<Project> { Success = true, StatusCode = 200, Result = response.Result }
             : new ProjectResult<Project> { Success = false, StatusCode = 404, Error = $"Project '{id}' was not found." };
+    }
+
+    public async Task<ProjectResult> UpdateProjectAsync(EditProjectFormData formData)
+    {
+        if (formData == null)
+            return new ProjectResult { Success = false, StatusCode = 400, Error = "Not all required fields are supplied." };
+
+        
+        var statusResult = await _statusService.GetStatusByIdAsync(formData.StatusId);
+        if (!statusResult.Success)
+            return new ProjectResult { Success = false, StatusCode = statusResult.StatusCode, Error = statusResult.Error };
+
+       
+
+        var projectEntity = formData.MapTo<ProjectEntity>();
+        projectEntity.StatusId = statusResult.Result!.Id;
+
+        var exists = await _projectRepository.ExistAsync(x => x.Id == projectEntity.Id);
+        if (!exists.Success)
+            return new ProjectResult { Success = false, StatusCode = 404, Error = "Project not found." };
+
+        var result = await _projectRepository.UpdateAsync(projectEntity);
+        return result.Success
+            ? new ProjectResult { Success = true, StatusCode = 200 }
+            : new ProjectResult { Success = false, StatusCode = result.StatusCode, Error = result.Error };
+    }
+
+    public async Task<ProjectResult> DeleteProjectAsync(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return new ProjectResult { Success = false, StatusCode = 400, Error = "Project id is required." };
+
+        
+        var toDelete = new ProjectEntity { Id = id };
+        var result = await _projectRepository.DeleteAsync(toDelete);
+
+        return result.Success
+            ? new ProjectResult { Success = true, StatusCode = 200 }
+            : new ProjectResult { Success = false, StatusCode = result.StatusCode, Error = result.Error };
     }
 };

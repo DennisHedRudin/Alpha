@@ -53,9 +53,11 @@
 
 
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Remember Me <a href="" class="terms-link">Forgot Password?</a></label>
-
+            <input asp-for="IsPersistent" class="form-check-input" />
+            <label asp-for="IsPersistent" class="form-check-label">
+                Remember Me
+            </label>
+            <a href="#" class="terms-link">Forgot Password?</a>
         </div>
 
 
@@ -67,3 +69,5 @@
     </form>
 
 </div>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

@@ -1,10 +1,10 @@
 ﻿
 @model ProjectViewModel
 
-<div class="project-card" data-project-id="@Model.Id">
+<div  class="project-card " data-project-id="@Model.Id">
     <div class="card-header">
         <div class="project-image">
-            <img src="@Model.ProjectImage ?? " /images/project/project-template.svg" />
+            <img src="@(Model.ProjectImage ?? " /images/project/project-template.svg")" />
         </div>
         <h6 class="project-name">@Model.ProjectName</h6>
         <span class="client-name">@Model.ClientName</span>
@@ -15,18 +15,14 @@
             <div id="projectdropdown-@Model.Id" class="dropdown">
                 <div class="dropdown-body">
                     <nav class="dropdown-actions">
-                        <a class="dropdown-action" href="#">
+                        <a class="dropdown-action edit-project-btn" href="#" data-project-id="@Model.Id" data-modal="true">
                             <i class="fa-duotone fa-solid fa-pen-to-square"></i>
                             <span>Edit</span>
                         </a>
-                        <a class="dropdown-action" href="#">
-                            <i class="fa-duotone fa-solid fa-user-plus" style="--fa-primary-opacity: 0.4; --fa-secondary-opacity: 1;"></i>
-                            <span>Add Member</span>
-                        </a>
                     </nav>
-                    <div class="divider"></div>
+                    <div class="dropdown-divider"></div>
                     <nav class="dropdown-actions">
-                        <a class="dropdown-action remove">
+                        <a class="dropdown-action remove delete-project-btn" data-project-id="@Model.Id">
                             <i class="fa-duotone fa-solid fa-trash"></i>
                             <span>Delete Project</span>
                         </a>
@@ -38,7 +34,7 @@
         </div>
     </div>
     <div class="card-body">
-        <p>@Html.Raw(Model.Description)</p>
+        <p>@Model.Description</p>
     </div>
     <div class="card-footer">
         <div class="badge badge-normal time">

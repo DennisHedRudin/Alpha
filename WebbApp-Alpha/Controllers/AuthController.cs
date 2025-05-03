@@ -7,6 +7,7 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebbApp_Alpha.ViewModels;
+using WebbApp_Alpha.ViewModels.Members;
 
 
 namespace WebbApp_Alpha.Controllers;
@@ -25,23 +26,23 @@ public class AuthController(IAuthService authService, SignInManager<MemberEntity
     }
 
     [HttpPost]
-
     public async Task<IActionResult> Register(SignUpFormModel model)
     {
         if (!ModelState.IsValid)
             return View(model);
-
+        
         var signUpFormData = model.MapTo<MemberSignUpModel>();
         var result = await _authService.SignUpAsync(signUpFormData);
 
         if (result.Success)
-            return LocalRedirect("~/");
+        {
 
+            return RedirectToAction(nameof(Login));
+        }
 
-
+        
         ViewBag.ErrorMessage = result.Error;
         return View(model);
-
     }
 
 
@@ -55,7 +56,7 @@ public class AuthController(IAuthService authService, SignInManager<MemberEntity
 
     [HttpPost]
 
-    public async Task<IActionResult> Login(LoginModelData form, string returnUrl = "~/")
+    public async Task<IActionResult> Login(MemberLoginForm form, string returnUrl = "~/")
     {
         ViewBag.ErrorMessage = null;
         ViewBag.ReturnUrl = returnUrl;
@@ -68,7 +69,7 @@ public class AuthController(IAuthService authService, SignInManager<MemberEntity
         var result = await _authService.LoginAsync(signInFormData);
         if (result.Success)
         {
-            return LocalRedirect(returnUrl);
+            return RedirectToAction("Index", "Projects");
         }
 
         ViewBag.ErrorMessage = result.Error;
@@ -77,12 +78,12 @@ public class AuthController(IAuthService authService, SignInManager<MemberEntity
     }
 
 
-
-
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Signout()
     {
         await _authService.SignoutAsync();
-        return LocalRedirect("~/");
+        return RedirectToAction("Login", "Auth");
     }
 
     #endregion

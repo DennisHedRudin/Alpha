@@ -1,38 +1,40 @@
-﻿
-using Business.Interfaces;
+﻿using Business.Interfaces;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebbApp_Alpha.ViewModels.Projects;
+
 
 namespace WebbApp_Alpha.Controllers;
 
 
 [Authorize]
-public class AdminController(IMemberService memberService, IProjectService projectService) : Controller
+public class AdminController(IMemberService memberService, IClientService clientService) : Controller
 {
-    private readonly IMemberService _memberService = memberService;
-    private readonly IProjectService _projectService = projectService;
+    private readonly IMemberService _memberService = memberService;    
+    private readonly IClientService _clientService = clientService;
+   
 
-    public IActionResult Projects()
-    {        
-
-        var viewModel = new ProjectsViewModel()
-        {
-            Projects = [new(), new()],
-            
-        };
-
-        return View(viewModel);
-    }
-
-    [Authorize(Roles = "admin")]
     public async Task<IActionResult> Members()
     {
-        var members = await _memberService.GetMembersAsync();
-
-        return View(members);
+        var result = await _memberService.GetMembersAsync();
+        
+        var members = result.Result ?? Enumerable.Empty<Member>();
+        return View(members); 
     }
 
+    
+    public async Task<IActionResult> Clients()
+    {
+        var result = await _clientService.GetClientsAsync();
+        
+        var clients = result.Result ?? Enumerable.Empty<Domain.Models.Client>();
+        return View(clients);  
+    }
 
-
+    
+    public IActionResult Projects()
+        => RedirectToAction("Index", "Projects");
 }
+
+
+

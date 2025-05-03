@@ -21,7 +21,7 @@ public class AuthService(SignInManager<MemberEntity> signInManager, UserManager<
         if (model == null)
             return new AuthResult { Success = false, StatusCode = 400, Error = "Not all required feilds are supplied." };
 
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.IsPresistent, false);
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.IsPersistent, false);
         return result.Succeeded
           ? new AuthResult { Success = true, StatusCode = 200 }
           : new AuthResult { Success = false, StatusCode = 401, Error = "Invalid emaill or password" };

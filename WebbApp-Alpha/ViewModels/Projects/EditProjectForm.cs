@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebbApp_Alpha.ViewModels.Projects;
 
@@ -9,6 +10,8 @@ public class EditProjectForm
     [Display(Name = "Project Image", Prompt = "Select an image")]
     [DataType(DataType.Upload)]
     public IFormFile? ProjectImage { get; set; }
+
+    public string? ExistingImageUrl { get; set; }
 
     [Display(Name = "Project Name", Prompt = "Enter project name")]
     [Required(ErrorMessage = "Required")]
@@ -43,4 +46,9 @@ public class EditProjectForm
     [Display(Name = "Status")]
     [Required(ErrorMessage = "Required")]
     public int StatusId { get; set; }
+
+    public IEnumerable<SelectListItem> Clients { get; set; } = [];
+    public IEnumerable<SelectListItem> Members { get; set; } = [];
+
+    public IEnumerable<SelectListItem> Statuses { get; set; } = [];
 }

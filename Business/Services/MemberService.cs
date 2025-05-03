@@ -53,6 +53,8 @@ public class MemberService(IMemberRepository memberRepository, UserManager<Membe
         {
             var memberEntity = form.MapTo<MemberEntity>();
 
+            memberEntity.UserName = form.Email;
+
             var result = await _userManager.CreateAsync(memberEntity, form.Password);
 
             if (result.Succeeded)

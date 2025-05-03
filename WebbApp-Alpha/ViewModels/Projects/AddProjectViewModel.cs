@@ -30,7 +30,7 @@ public class AddProjectViewModel
     [DataType(DataType.Date)]
     public DateTime? EndDate { get; set; }
 
-    [Display(Name = "Project Members", Prompt = "Select members")]
+    [Display(Name = "Members", Prompt = "Select members")]
     [Required(ErrorMessage = "You must select a member")]
     public string MemberId { get; set; } = null!;
 

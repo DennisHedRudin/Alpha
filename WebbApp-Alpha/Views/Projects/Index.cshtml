@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Projects";
-   
+
 }
 
 
@@ -10,7 +10,7 @@
 
 <div class="main-headline">
     <h2>Projects</h2>
-    <button class="btn btn-add">
+    <button class="btn btn-add" data-modal="true" data-target="#addProjectModal">
         Add Project
     </button>
 
@@ -24,16 +24,23 @@
     </div>
 </div>
 
-<section class="project-list">
-    @if(Model?.Projects != null && Model.Projects.Any()){
+<section id="projects" class="project-list">
+    @if (Model?.Projects != null && Model.Projects.Any())
+    {
         @foreach (var project in Model.Projects)
         {
             @await Html.PartialAsync("Partials/Projects/_ProjectListItemPartial", project)
         }
     }
-    
-    
+
+
 </section>
 
+<div id="editProjectModal" class="modal" style="display: none;">
+    <div class="modal-content" id="editProjectModalContent">
+        
+    </div>
+</div>
+
 @await Html.PartialAsync("Partials/Sections/_addProjectForm", Model.AddForm)
-@await Html.PartialAsync("Partials/Projects/_editProjectForm", Model.EditForm)
+

@@ -3,7 +3,7 @@ namespace WebbApp_Alpha.ViewModels.Projects;
 
 public class ProjectsViewModel
 {
-    public IEnumerable<ProjectViewModel> Projects { get; set; } = [];
+    public IEnumerable<ProjectViewModel> Projects { get; set; } = Enumerable.Empty<ProjectViewModel>();
     public AddProjectViewModel AddForm { get; set; } = new AddProjectViewModel();
-    public EditProjectForm EditForm { get; set; } = new EditProjectForm();
+    public EditProjectViewModel EditForm { get; set; } = new EditProjectViewModel();
 }
