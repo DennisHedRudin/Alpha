@@ -19,29 +19,63 @@ public class ProjectsController(IProjectService projectService, IClientService c
 
     public async Task<IActionResult> Index()
     {
-
-        var projects = (await _projectService.GetProjectsAsync()).Result
-                      ?? Enumerable.Empty<Project>();
-
-
-        var projectlist = projects
-            .Select(p => p.MapTo<ProjectViewModel>())
-            .ToList();
-
-        var clientsDto = (await _clientService.GetClientsAsync()).Result
-                       ?? Enumerable.Empty<Client>();
+        
+        var clientsDto = (await _clientService.GetClientsAsync()).Result ?? Enumerable.Empty<Client>();
         var clientItems = clientsDto
             .Select(c => new SelectListItem(c.ClientName, c.Id))
             .ToList();
 
-        
-        var membersDto = (await _memberService.GetMembersAsync()).Result
-                         ?? Enumerable.Empty<Member>();
+        var membersDto = (await _memberService.GetMembersAsync()).Result ?? Enumerable.Empty<Member>();
         var memberItems = membersDto
             .Select(m => new SelectListItem($"{m.FirstName} {m.LastName}", m.Id))
             .ToList();
 
+        var statusesDto = (await _statusService.GetStatusesAsync()).Result ?? Enumerable.Empty<Status>();
+        var statusItems = statusesDto
+            .Select(s => new SelectListItem(s.StatusName, s.Id.ToString()))
+            .ToList();
+
         
+        var projects = (await _projectService.GetProjectsAsync()).Result
+            ?.Where(p => p.Member != null && p.Client != null && p.Status != null)
+            .ToList()
+            ?? [];
+
+        
+        var projectlist = projects.Select(p => new ProjectViewModel
+        {
+            Id = p.Id,
+            ProjectImage = p.Image ?? "/images/project/project-template.svg",
+            ProjectName = p.ProjectName,
+            Description = p.Description ?? "",
+            Client = p.Client,
+            TimeLeft = p.EndDate.HasValue
+                ? $"{(p.EndDate.Value - DateTime.Now).Days} days left"
+                : "No end date",
+            Members = [$"{p.Member.FirstName} {p.Member.LastName}"],
+
+            EditForm = new EditProjectViewModel
+            {
+                Form = new EditProjectForm
+                {
+                    Id = p.Id,
+                    ExistingImageUrl = p.Image,
+                    ProjectName = p.ProjectName,
+                    Description = p.Description,
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    Budget = p.Budget,
+                    ClientId = p.Client.Id,
+                    MemberId = p.Member.Id,
+                    StatusId = p.Status.Id
+                },
+                Clients = clientItems,
+                Members = memberItems,
+                Statuses = statusItems
+            }
+        }).ToList();
+
+       
         var vm = new ProjectsViewModel
         {
             Projects = projectlist,
@@ -50,12 +84,12 @@ public class ProjectsController(IProjectService projectService, IClientService c
                 Clients = clientItems,
                 Members = memberItems
             },
-            EditForm = new EditProjectViewModel() 
+            
         };
-        
 
         return View(vm);
     }
+
 
 
     public async Task<IActionResult> Started()
@@ -125,34 +159,34 @@ public class ProjectsController(IProjectService projectService, IClientService c
             return Problem(result.Error ?? "Could not create project.");
     }
 
-    public async Task<IActionResult> Edit(string id)
-    {
-        var projResult = await _projectService.GetProjectAsync(id);
-        if (!projResult.Success)
-            return NotFound();
+    //public async Task<IActionResult> Edit(string id)
+    //{
+    //    var projResult = await _projectService.GetProjectAsync(id);
+    //    if (!projResult.Success)
+    //        return NotFound();
 
-        var form = projResult.Result!.MapTo<EditProjectForm>();
-        form.ExistingImageUrl = projResult.Result!.Image;
+    //    var form = projResult.Result!.MapTo<EditProjectForm>();
+    //    form.ExistingImageUrl = projResult.Result!.Image;
 
-        var clients = (await _clientService.GetClientsAsync()).Result!
-                      .Select(c => new SelectListItem(c.ClientName, c.Id));
+    //    var clients = (await _clientService.GetClientsAsync()).Result!
+    //                  .Select(c => new SelectListItem(c.ClientName, c.Id));
 
-        var members = (await _memberService.GetMembersAsync()).Result!
-                      .Select(m => new SelectListItem($"{m.FirstName} {m.LastName}", m.Id));
+    //    var members = (await _memberService.GetMembersAsync()).Result!
+    //                  .Select(m => new SelectListItem($"{m.FirstName} {m.LastName}", m.Id));
 
-        var statuses = (await _statusService.GetStatusesAsync()).Result!
-                       .Select(s => new SelectListItem(s.StatusName, s.Id.ToString()));
+    //    var statuses = (await _statusService.GetStatusesAsync()).Result!
+    //                   .Select(s => new SelectListItem(s.StatusName, s.Id.ToString()));
 
-        var vm = new EditProjectViewModel
-        {
-            Form = form,
-            Clients = clients,
-            Members = members,
-            Statuses = statuses
-        };
+    //    var vm = new EditProjectViewModel
+    //    {
+    //        Form = form,
+    //        Clients = clients,
+    //        Members = members,
+    //        Statuses = statuses
+    //    };
 
-        return PartialView("Partials/projects/_editProjectForm", vm);
-    }
+    //    return PartialView("Partials/projects/_editProjectForm", vm);
+    //}
 
     [HttpPost]
     public async Task<IActionResult> UpdateProject(EditProjectForm form)

@@ -7,7 +7,7 @@
             <img src="@(Model.ProjectImage ?? " /images/project/project-template.svg")" />
         </div>
         <h6 class="project-name">@Model.ProjectName</h6>
-        <span class="client-name">@Model.ClientName</span>
+        <span class="client-name">@Model.Client?.ClientName</span>
         <div id="project-actions-container">
             <button type="button" data-type="dropdown" data-target="#projectdropdown-@Model.Id" class="btn-action">
                 <i class="fa-solid fa-ellipsis"></i>
@@ -15,7 +15,7 @@
             <div id="projectdropdown-@Model.Id" class="dropdown">
                 <div class="dropdown-body">
                     <nav class="dropdown-actions">
-                        <a class="dropdown-action edit-project-btn" href="#" data-project-id="@Model.Id" data-modal="true">
+                        <a class="dropdown-action edit-project-btn" href="#" data-target="#editProjectModal-@Model.Id" data-modal="true">
                             <i class="fa-duotone fa-solid fa-pen-to-square"></i>
                             <span>Edit</span>
                         </a>
@@ -49,4 +49,11 @@
         </div>
 
     </div>
+
+    <div id="editProjectModal" class="modal" style="display: none;">
+        <div class="modal-content" id="editProjectModalContent">
+            @await Html.PartialAsync("Partials/Projects/_editProjectForm", Model.EditForm)
+        </div>
+    </div>
+
 </div>

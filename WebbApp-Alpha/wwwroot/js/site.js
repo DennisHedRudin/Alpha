@@ -178,6 +178,15 @@
         });
     })
 
+    document.querySelectorAll('.edit-project-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            const target = btn.getAttribute('data-target');
+            const modal = document.querySelector(target);
+            if (modal) modal.style.display = 'flex';
+        });
+    });
+
 });
 
 

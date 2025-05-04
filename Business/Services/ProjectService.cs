@@ -1,4 +1,5 @@
-﻿using Business.Interfaces;
+﻿using System.Linq.Expressions;
+using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
 using Data.Repositories;
@@ -42,9 +43,12 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
     {
         var response = await _projectRepository.GetAllAsync
             (orderByDescending: true, sortBy: s => s.CreateDate, where: null,
-            include => include.Member,
-            include => include.Status,
-            include => include.Client
+            [
+                include => include.Member,
+                include => include.Status,
+                include => include.Client
+            ]
+            
                 );
 
 
@@ -56,9 +60,12 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         var response = await _projectRepository.GetAsync
            (
            where: x => x.Id == id,
-           include => include.Member,
-           include => include.Status,
-           include => include.Client
+           [
+               include => include.Member,
+               include => include.Status,
+               include => include.Client
+           ]
+           
                );
 
         return response.Success
