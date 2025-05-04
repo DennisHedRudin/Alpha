@@ -1005,11 +1005,13 @@ form .field-validation-error {
 
 .project-name {
     grid-area: name;
+    text-align: left;
 }
 
 .client-name {
     grid-area: client;
-    color: var(--gray-300);
+    color: var(--body-light);
+    text-align: left;
 }
 
 .project-actions {
@@ -1017,8 +1019,9 @@ form .field-validation-error {
 }
 
 .card-body {
-    margin: 0 0.2rem;
+    margin-top: 0.8rem;
     min-height: 100px;
+    text-align: left;
 }
 
 .members {
@@ -1328,6 +1331,7 @@ table {
     left: 0;
     right: 0;
     bottom: 0;
+    
 }
 
     .modal .modal-content {
@@ -1335,6 +1339,7 @@ table {
         border-radius: 16px;
         box-shadow: 0 4px 4px 3px rgba(196, 196, 196, 0.1);
         padding: 2rem;
+        width: 550px;
     }
 
         .modal .modal-content .modal-header {

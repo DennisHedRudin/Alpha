@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Business.Interfaces;
+using Business.Mappers;
 using Business.Models;
 using Data.Entities;
 using Data.Repositories;
@@ -41,19 +42,19 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
     public async Task<ProjectResult<IEnumerable<Project>>> GetProjectsAsync()
     {
-        var response = await _projectRepository.GetAllAsync
-            (orderByDescending: true, sortBy: s => s.CreateDate, where: null,
-            [
-                include => include.Member,
-                include => include.Status,
-                include => include.Client
-            ]
-            
-                );
+      
+        var entities = await _projectRepository.GetAllEntitiesAsync();
 
+        var domainProjects = entities.Select(ProjectMapper.ToDomain);
 
-        return new ProjectResult<IEnumerable<Project>> { Success = true, StatusCode = 201, Result = response.Result };
+        return new ProjectResult<IEnumerable<Project>>
+        {
+            Success = true,
+            StatusCode = 200,
+            Result = domainProjects
+        };
     }
+    
 
     public async Task<ProjectResult<Project>> GetProjectAsync(string id)
     {
@@ -103,12 +104,12 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         if (string.IsNullOrEmpty(id))
             return new ProjectResult { Success = false, StatusCode = 400, Error = "Project id is required." };
 
-        
-        var toDelete = new ProjectEntity { Id = id };
-        var result = await _projectRepository.DeleteAsync(toDelete);
+        var result = await _projectRepository.DeleteAsync(new ProjectEntity { Id = id });
 
         return result.Success
             ? new ProjectResult { Success = true, StatusCode = 200 }
             : new ProjectResult { Success = false, StatusCode = result.StatusCode, Error = result.Error };
     }
+
+
 };

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebbApp_Alpha.ViewModels.Projects;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebbApp_Alpha.Controllers;
 
@@ -159,49 +160,86 @@ public class ProjectsController(IProjectService projectService, IClientService c
             return Problem(result.Error ?? "Could not create project.");
     }
 
-    //public async Task<IActionResult> Edit(string id)
-    //{
-    //    var projResult = await _projectService.GetProjectAsync(id);
-    //    if (!projResult.Success)
-    //        return NotFound();
 
-    //    var form = projResult.Result!.MapTo<EditProjectForm>();
-    //    form.ExistingImageUrl = projResult.Result!.Image;
-
-    //    var clients = (await _clientService.GetClientsAsync()).Result!
-    //                  .Select(c => new SelectListItem(c.ClientName, c.Id));
-
-    //    var members = (await _memberService.GetMembersAsync()).Result!
-    //                  .Select(m => new SelectListItem($"{m.FirstName} {m.LastName}", m.Id));
-
-    //    var statuses = (await _statusService.GetStatusesAsync()).Result!
-    //                   .Select(s => new SelectListItem(s.StatusName, s.Id.ToString()));
-
-    //    var vm = new EditProjectViewModel
-    //    {
-    //        Form = form,
-    //        Clients = clients,
-    //        Members = members,
-    //        Statuses = statuses
-    //    };
-
-    //    return PartialView("Partials/projects/_editProjectForm", vm);
-    //}
 
     [HttpPost]
     public async Task<IActionResult> UpdateProject(EditProjectForm form)
     {
         if (!ModelState.IsValid)
-            return View(form);
+        {
+            
+            var clients = (await _clientService.GetClientsAsync()).Result!
+                          .Select(c => new SelectListItem(c.ClientName, c.Id));
 
+            var members = (await _memberService.GetMembersAsync()).Result!
+                          .Select(m => new SelectListItem($"{m.FirstName} {m.LastName}", m.Id));
+
+            var statuses = (await _statusService.GetStatusesAsync()).Result!
+                           .Select(s => new SelectListItem(s.StatusName, s.Id.ToString()));
+
+            var editForm = new EditProjectViewModel
+            {
+                Form = form,
+                Clients = clients,
+                Members = members,
+                Statuses = statuses
+            };
+
+            
+            var projectsResult = await _projectService.GetProjectsAsync();
+            var clientItems = clients.ToList();
+            var memberItems = members.ToList();
+            var statusItems = statuses.ToList();
+
+            var projectlist = projectsResult.Result!
+                .Select(p => new ProjectViewModel
+                {
+                    Id = p.Id,
+                    ProjectImage = p.Image ?? "/images/project/project-template.svg",
+                    ProjectName = p.ProjectName,
+                    Description = p.Description ?? "",
+                    Client = p.Client,
+                    TimeLeft = p.EndDate.HasValue
+                        ? $"{(p.EndDate.Value - DateTime.Now).Days} days left"
+                        : "No end date",
+                    Members = [$"{p.Member.FirstName} {p.Member.LastName}"],
+
+                    EditForm = p.Id == form.Id 
+                        ? editForm
+                        : new EditProjectViewModel
+                        {
+                            Form = new EditProjectForm { Id = p.Id },
+                            Clients = clientItems,
+                            Members = memberItems,
+                            Statuses = statusItems
+                        }
+                })
+                .ToList();
+
+            var vm = new ProjectsViewModel
+            {
+                Projects = projectlist,
+                AddForm = new AddProjectViewModel
+                {
+                    Clients = clientItems,
+                    Members = memberItems
+                },
+                EditForm = editForm 
+            };
+
+            
+            ViewData["OpenEditModalId"] = form.Id;
+
+            return View("Index", vm);
+        }
 
         var dto = form.MapTo<EditProjectFormData>();
         var result = await _projectService.UpdateProjectAsync(dto);
 
         if (result.Success)
-            return Ok(new { success = true });
-        else
-            return Problem(result.Error ?? "Could not update project.");
+            return RedirectToAction("Index");
+
+        return Problem(result.Error ?? "Could not update project.");
     }
 
 
@@ -213,9 +251,10 @@ public class ProjectsController(IProjectService projectService, IClientService c
 
         var result = await _projectService.DeleteProjectAsync(id);
         if (result.Success)
-            return Ok(new { success = true });
+
+            return RedirectToAction("Index");
         else
-            return Problem(result.Error ?? "Could not delete project.");
+            return Problem("Unable to delete project.");
     }
 }
 

@@ -1,98 +1,105 @@
 ﻿    @model EditProjectViewModel
 
-    <div class="modal-header">
-        <h3>Edit Project</h3>
-        <button class="btn-closed" data-close="true"></button>
-    </div>
-
-    <form method="post"
-          asp-controller="Projects"
-          asp-action="UpdateProject"
-          enctype="multipart/form-data"
-          novalidate
-          class="ajax-form">
-
-        <input asp-for="Form.Id" type="hidden" />
-
-        <div class="image-previewer square">
-            <img src="@Model.Form.ExistingImageUrl" class="image-preview" />
-            <input asp-for="Form.ProjectImage" accept="image/*" class="hide" />
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Form.ProjectName"></label>
-            <input asp-for="Form.ProjectName" />
-            <span asp-validation-for="Form.ProjectName"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Form.ClientId"></label>
-            <div class="field-group">
-                <select asp-for="Form.ClientId" asp-items="Model.Clients">
-                    <option value="">Select a client</option>
-                </select>
-                <span asp-validation-for="Form.ClientId"></span>
+<div class="modal" id="editProjectModal-@Model.Form.Id" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Project</h3>
+                <button class="btn-closed" data-close="true"></button>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label asp-for="Form.Description"></label>
-            <div class="field-group">
-                <textarea asp-for="Form.Description"></textarea>
-                <span asp-validation-for="Form.Description"></span>
-            </div>
-        </div>
+            <form method="post"
+                  asp-controller="Projects"
+                  asp-action="UpdateProject"
+                  enctype="multipart/form-data"
+                  novalidate  >                
 
-        <div class="form-group">
-            <label asp-for="Form.StartDate"></label>
-            <div class="field-group">
-                <input asp-for="Form.StartDate" type="date" />
-                <span asp-validation-for="Form.StartDate"></span>
-            </div>
-        </div>
+                <input asp-for="Form.Id" type="hidden" />
 
-        <div class="form-group">
-            <label asp-for="Form.EndDate"></label>
-            <div class="field-group">
-                <input asp-for="Form.EndDate" type="date" />
-                <span asp-validation-for="Form.EndDate"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Form.Budget"></label>
-            <div class="field-group">
-                <input asp-for="Form.Budget" />
-                <span asp-validation-for="Form.Budget"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Form.MemberId"></label>
-            <div class="field-group">
-                <select asp-for="Form.MemberId" asp-items="Model.Members">
-                    <option value="">Select a member</option>
-                </select>
-                <span asp-validation-for="Form.MemberId"></span>
-            </div>
-        </div>
-
-        @if (Model.Statuses?.Any() == true)
-        {
-            <div class="form-group">
-                <label asp-for="Form.StatusId"></label>
-                <div class="field-group">
-                    <select asp-for="Form.StatusId" asp-items="Model.Statuses">
-                        <option value="">Select a status</option>
-                    </select>
-                    <span asp-validation-for="Form.StatusId"></span>
+                <div class="image-previewer square">
+                    <img src="@Model.Form.ExistingImageUrl" class="image-preview" />
+                    <input asp-for="Form.ProjectImage" accept="image/*" class="hide" />
                 </div>
-            </div>
-        }
 
-        <button type="submit" class="btn btn-blue btn-submit">
-            Save
-        </button>
-    </form>
+                <div class="form-group">
+                    <label asp-for="Form.ProjectName"></label>
+                    <input asp-for="Form.ProjectName" />
+                    <span asp-validation-for="Form.ProjectName"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Form.ClientId"></label>
+                    <div class="field-group">
+                        <select asp-for="Form.ClientId" asp-items="Model.Clients">
+                            <option value="">Select a client</option>
+                        </select>
+                        <span asp-validation-for="Form.ClientId"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Form.Description"></label>
+                    <div class="field-group">
+                        <textarea asp-for="Form.Description"></textarea>
+                        <span asp-validation-for="Form.Description"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Form.StartDate"></label>
+                    <div class="field-group">
+                        <input asp-for="Form.StartDate" type="date" />
+                        <span asp-validation-for="Form.StartDate"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Form.EndDate"></label>
+                    <div class="field-group">
+                        <input asp-for="Form.EndDate" type="date" />
+                        <span asp-validation-for="Form.EndDate"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Form.Budget"></label>
+                    <div class="field-group">
+                        <input asp-for="Form.Budget" />
+                        <span asp-validation-for="Form.Budget"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Form.MemberId"></label>
+                    <div class="field-group">
+                        <select asp-for="Form.MemberId" asp-items="Model.Members">
+                            <option value="">Select a member</option>
+                        </select>
+                        <span asp-validation-for="Form.MemberId"></span>
+                    </div>
+                </div>
+
+                @if (Model.Statuses?.Any() == true)
+                {
+                    <div class="form-group">
+                        <label asp-for="Form.StatusId"></label>
+                        <div class="field-group">
+                            <select asp-for="Form.StatusId" asp-items="Model.Statuses">
+                                <option value="">Select a status</option>
+                            </select>
+                            <span asp-validation-for="Form.StatusId"></span>
+                        </div>
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-blue btn-submit">
+                    Save
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+    
+
 
     @await Html.PartialAsync("_ValidationScriptsPartial")

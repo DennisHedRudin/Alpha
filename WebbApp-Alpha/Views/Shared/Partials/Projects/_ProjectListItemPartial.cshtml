@@ -22,10 +22,13 @@
                     </nav>
                     <div class="dropdown-divider"></div>
                     <nav class="dropdown-actions">
-                        <a class="dropdown-action remove delete-project-btn" data-project-id="@Model.Id">
-                            <i class="fa-duotone fa-solid fa-trash"></i>
-                            <span>Delete Project</span>
-                        </a>
+                        <form method="post" asp-controller="Projects" asp-action="DeleteProject" class="delete-project-form">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <button type="submit" class="dropdown-action remove" onclick="return confirm('Are you sure you want to delete this project?');">
+                                <i class="fa-duotone fa-solid fa-trash"></i>
+                                <span>Delete Project</span>
+                            </button>
+                        </form>
                     </nav>
 
                 </div>
@@ -50,10 +53,10 @@
 
     </div>
 
-    <div id="editProjectModal" class="modal" style="display: none;">
-        <div class="modal-content" id="editProjectModalContent">
+    
+        
             @await Html.PartialAsync("Partials/Projects/_editProjectForm", Model.EditForm)
-        </div>
-    </div>
+        
+    
 
 </div>
